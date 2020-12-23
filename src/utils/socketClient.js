@@ -3,8 +3,8 @@ const commandMessages = require('../config/messageStrings')
 const { generateHashFrom } = require('./hashFactory')
 
 /**
- * Converte mensagens em objetos para buffers para podermos enviar como binário
- * @param {string|Object} message Mensagem a ser convertida
+ * Converts messages to objects for Buffer so that we can send them as binary
+ * @param {string|Object} message message to convert
  */
 function _convert (message) {
   let innerMessage = null
@@ -44,8 +44,8 @@ function sendCommandTo (address, port, command, params, errorCb = handleError) {
 }
 
 /**
- * Cria os dados que serão enviados com o comando para padronização
- * @param {string} command String do comando
+ * Creates the data that will be send with the command
+ * @param {string} command Command string
  */
 function createCommandPayload (command) {
   switch (command) {
@@ -122,10 +122,10 @@ function createCommandPayload (command) {
 }
 
 /**
- * Envia uma mensagem a um nó
- * @param {string} address Endereço do destinatário
- * @param {number} port Porta do destinarátio
- * @param {string|Buffer} message Mensagem a ser enviada
+ * Send a message to a node
+ * @param {string} address Receiver address
+ * @param {number} port Receiver port
+ * @param {string|Buffer} message Message to send
  */
 function sendMessageTo (address, port, message, errorCb) {
   const client = new net.Socket()
