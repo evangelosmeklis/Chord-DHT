@@ -6,21 +6,21 @@ const logger = require('knoblr')
 
 // Propriedades do nó
 global.ADDRESS = '127.0.0.1'
-global.PORT = inSocket.getPort() // Porta atual que o nó está ouvindo
-global.fileList = {} // Vai armazenar a lista de arquivos deste nó no formato de dicionário chave/valor
-global.myId = hashMaker.generateHashFrom(`${global.PORT}:${global.ADDRESS}`) // ID deste nó
-global.nextNode = { ip: null, port: null, id: null } // Informações do próximo nó
-global.previousNode = { ip: null, port: null, id: null } // Informações do nó anterior
+global.PORT = inSocket.getPort() // The current PORT that our node is in
+global.fileList = {} //It will store the file list in a form of dictionary (key,value)
+global.myId = hashMaker.generateHashFrom(`${global.PORT}:${global.ADDRESS}`) //creates the node Id
+global.nextNode = { ip: null, port: null, id: null } // Creates the next node reference
+global.previousNode = { ip: null, port: null, id: null } // Creates the previous node reference
 global.stats = {}
 global.DEBUG = 0
 
 /**
- * Tenta se conectar ao primeiro nó conhecido da rede
- * @param {{nodeAddress: string, nodePort: number}[]} nodeList Lista de nós conhecidos da rede
+ * Tries to connect to the first node on the network
+ * @param {{nodeAddress: string, nodePort: number}[]} nodeList The list of the known nodes on the network
  */
 function connectToDHT (nodeList) {
   if (nodeList.length <= 0) {
-    logger.info(`Nenhum nó encontrado, criando uma nova rede`) // Não há nós, então ele é o primeiro nó da DHT
+    logger.info(`No nodes where found. Creating a new network`) // There are no nodes, so this is the first node on the DHT
     global.myId = hashMaker.generateHashFrom(
       (0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff).toString(16)
     )
@@ -29,12 +29,12 @@ function connectToDHT (nodeList) {
 
   const handleConnectionError = (err) => {
     logger.error(
-      `Erro ao enviar mensagem para o nó ${nodeToConnect.nodeAddress}:${nodeToConnect.nodePort}, enviando para o próximo nó`
+      `There was an error connecting to ${nodeToConnect.nodeAddress}:${nodeToConnect.nodePort}, sending to the next node...`
     )
-    connectToDHT(nodeList) // Chama a função novamente com o elemento a menos
+    connectToDHT(nodeList) // Calls the function again with the least element
   }
 
-  const nodeToConnect = nodeList.shift() // Remove o primeiro elemento e retorna
+  const nodeToConnect = nodeList.shift() // Removes the first element and returns
   outSocket.sendCommandTo(
     nodeToConnect.nodeAddress,
     nodeToConnect.nodePort,
@@ -45,51 +45,48 @@ function connectToDHT (nodeList) {
   setTimeout(setUpUser, 1500)
 }
 
-// Trata saídas bruscas jogando para um evento conhecido
+// Deals with sudden exits on a known event
 function setUpExitProtocol () {
-  process.on('SIGINT', () => process.exit(34)) // 34 é um código arbitrário que definimos como uma saída brusca
-  // Evento conhecido de saída
+  process.on('SIGINT', () => process.exit(34)) // 34 is a random code that we use to define a sudden exit
+  //A known exit event
   process.on('exit', (code) => {
-    console.log() // Nova linha pelo ctrl+c
+    console.log() // New line after ctrl+C
 
     if (code === 34) {
       logger.info('Detecting exit')
-      require('./consoleCommands/leave')() // Roda o comando de saída
+      require('./consoleCommands/leave')() // Execute exit command
     }
   })
 }
 
 /**
- * Cria a conexão local para receber mensagens
+ * Creates local connection for message interaction
  */
 function setUpLocalTCPServer () {
-  // Cria o servidor do socket TCP deste nó
+  // Creates the TCP socket for this node
   const server = inSocket.createServer()
   server.listen(PORT, ADDRESS, () =>
     logger.info(`Server listening on ${server.address().address}:${server.address().port}`)
   )
 
   server.on('connection', (socket) => {
-    // Abre a porta para recebimento de mensagens TCP
-    // logger.info(`The client ${socket.remoteAddress}:${socket.remotePort} connected to this server`)
-
+    //Opens the port to receive tcp messages
     socket.on('data', (data) => {
-      // Evento de handling de mensagens que chegam
+      // Handling event for incoming messages
       const message = JSON.parse(data.toString())
-      global.stats[message.commandString] = (global.stats[message.commandString] || 0) + 1
+      global.stats[message.commandString] = (global.stats[message.commandString] || 0) + 1 //increases the count for this type of message
       if (global.DEBUG) console.log('### MESSAGE RECEIVED\n', message)
       require(`./messages/${message.commandString}`)(message.commandParams)
     })
 
     socket.on('close', () => {
-      // Quando um cliente desconecta deste socket
-      // logger.info(`The client ${socket.remoteAddress}:${socket.remotePort} disconnected from this server`)
+      //When a client disconnects from this socket
     })
   })
 }
 
 /**
- * Mostra a mensagem de inicio
+ * Shows the starting message
  */
 function printWelcomeMessage () {
   console.log(`-- You're now connected to the DHT as ${global.myId} --`)
@@ -98,10 +95,10 @@ function printWelcomeMessage () {
 }
 
 /**
- * Prepara a STDIN para receber mensagens
+ * Prepares STDin to receive messages
  */
 function openStdIn () {
-  // Abre o standard input para interação do usuário com o sistema
+  // Opens standard input for the user to interact with the system
   const stdIn = process.openStdin()
   stdIn.addListener('data', (input) => {
     const inStr = input.toString().replace(/\n$/, '')
@@ -126,7 +123,7 @@ function openStdIn () {
 }
 
 /**
- * Agrupa funções que deixam o console utilizável para os usuários
+ * Grouping fuctions that make the console usable for the user
  */
 function setUpUser () {
   setUpExitProtocol()
@@ -135,8 +132,8 @@ function setUpUser () {
 }
 
 /**
- * Ponto de entrada
- * @param {{nodePort: number, nodeAddress: string}[]} nodeList Lista de nós conhecidos da rede
+ * Point of enter
+ * @param {{nodePort: number, nodeAddress: string}[]} nodeList List with the known connected nodes
  */
 function start (nodeList) {
   try {

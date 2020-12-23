@@ -38,17 +38,16 @@ module.exports = (params) => {
       }
     }
 
-    // Atualiza o nó anterior para o novo nó ingressante
+    //The node that just entered becomes my previous node
     global.previousNode = {
       ip: params.nodeAddress,
       port: params.nodePort,
       id: params.id
     }
 
-    // Realiza a transferência dos arquivos que não estão mais sob a responsabilidade deste nó
+    //The files that are no longer supposed to be here (because of the way that the key,value pairs are stored) should go were they are supposed to be
     if (Object.keys(global.fileList).length > 0) {
-      // Para cada chave de arquivo (hash) armazenado na lista vamos testar se esse hash se encaixa na regra
-      // Depois vamos enviar o comando TRANSFER passando o arquivo para o nó que acabou de entrar
+      //for every key value pair in the nodes filelist we check if it should be put somewhere else (because of the new node that just joined)
       for (let fileHashName in global.fileList) {
         const fileHashChecksum = parseInt(fileHashName, 16)
         if (Math.abs(fileHashChecksum - idChecksum) >= Math.abs(fileHashChecksum - ingressNodeChecksum)) {
@@ -66,7 +65,7 @@ module.exports = (params) => {
       }
     }
   } else {
-    // Se o ID não for maior, então temos que rotear a mensagem para o próximo nó
+    // This goes up to the original if and what it does is that if the difference in the hashes is not what we want,we push the join message to our next node
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,
