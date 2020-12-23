@@ -1,0 +1,15 @@
+{
+  "name": "node-dht",
+  "version": "1.0.0",
+  "description": "Distributed Systems Course 2020-2021 DHT Chord Simple Application",
+  "main": "index.js",
+  "scripts": {
+    "join": "node index.js"
+  },
+  "repository": "",
+  "author": "Evangelos Meklis, Christos Syrmakezis and Panagiotis Haratsaris",
+  "license": "MIT",
+  "dependencies": {
+    "knoblr": "^2.4.0"
+  }
+}
