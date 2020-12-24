@@ -54,7 +54,7 @@ function setUpExitProtocol () {
 
     if (code === 34) {
       logger.info('Detecting exit')
-      require('./consoleCommands/leave')() // Execute exit command
+      require('./consoleCommands/depart')() // Execute exit command
     }
   })
 }

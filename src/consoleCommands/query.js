@@ -9,20 +9,22 @@ module.exports = (params) => {
   const [key] /*was key,saveLocation */ = params
   // print everything that is on the current node
   if (key == "*") {
-    console.log("---Printing contents of node---" )
-    console.log({ ip: global.ADDRESS, port: global.PORT, id: global.myId })
-    console.log("---Contents---")
-    for (let info in global.fileList){
-      console.log(global.fileList[info])
-    }
+    contents = []
+    //console.log("---Printing contents of node---" )
+    //console.log({ ip: global.ADDRESS, port: global.PORT, id: global.myId })
+    //console.log("---Contents---")
     //next node has to do the same
     if (global.nextNode.ip) {
+      thefirst = global.myId
+      times = 0
+      //we use the first and contents variables. The first is used for the system to know that it has made a full circle when it finds the first id again
+      //the contents is to keep all the contents in the array to return them to the first node that made the query with *
       return outSocket.sendCommandTo(
         //send retrieve message to next node
-        global.nextNode.ip,
-        global.nextNode.port,
+        global.ADDRESS,
+        global.PORT,
         messageCommand.RETRIEVEALL,
-        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(/*, resolvedLocation,*/ {
+        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(thefirst,times,contents,/*, resolvedLocation,*/ {
           //inside the retrieve message we include our infos so that the node who has the key can send us the info
           ip: global.ADDRESS,
           port: global.PORT,
@@ -31,18 +33,17 @@ module.exports = (params) => {
       )
     }
   }
+
   else {
     const searchKey = hashMaker.generateHashFrom(key)
     //const resolvedLocation = path.resolve(saveLocation)
 
     //if there is the searchKey on the fileList then call saveFileToDisk
     if (global.fileList[searchKey]){
-      console.log("What the actual fuck")
       return saveFileToDisk(searchKey /*, resolvedLocation*/)
     } 
 
     if (global.nextNode.ip) {
-      console.log("shit has gone sideways")
       console.log(global.ADDRESS)
       return outSocket.sendCommandTo(
         //send retrieve message to next node

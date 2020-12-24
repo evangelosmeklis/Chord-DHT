@@ -129,8 +129,10 @@ function createCommandPayload (command) {
         saveLocation
       })
     case commandMessages.RETRIEVEALL:
-      return (saveLocation, sender) => ({
-          saveLocation,
+      return (thefirst,times,contents, sender) => ({
+          thefirst,
+          times,
+          contents,
           sender:
           {
             ip: global.ADDRESS,
