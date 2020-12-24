@@ -4,7 +4,7 @@ const inSocket = require('./utils/socketServer')
 const outSocket = require('./utils/socketClient')
 const logger = require('knoblr')
 
-// Propriedades do nó
+// Node Properties
 global.ADDRESS = '127.0.0.1'
 global.PORT = inSocket.getPort() // The current PORT that our node is in
 global.fileList = {} //It will store the file list in a form of dictionary (key,value)

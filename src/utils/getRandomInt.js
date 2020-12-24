@@ -1,3 +1,3 @@
-module.exports = (min, max) => { //returns a random integer
+module.exports = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }

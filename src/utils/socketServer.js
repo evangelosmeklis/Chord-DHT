@@ -2,7 +2,7 @@ const net = require('net')
 const getRandomInt = require('./getRandomInt')
 
 /**
- * Create and return the TCP server
+ * Cria e retorna o servidor TCP
  */
 function createServer () {
   return net.createServer()
