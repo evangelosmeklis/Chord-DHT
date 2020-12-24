@@ -10,5 +10,6 @@ module.exports = (params) => {
   -> help: Shows this
   -> info: Shows node information
   -> debug: Toggle debug mode
+  -> contents: see node contents
   `)
 }

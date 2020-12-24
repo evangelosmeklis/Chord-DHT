@@ -21,8 +21,8 @@ module.exports = (params) => {
         //send retrieve message to next node
         global.nextNode.ip,
         global.nextNode.port,
-        messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(key,/*, resolvedLocation,*/ {
+        messageCommand.RETRIEVEALL,
+        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(/*, resolvedLocation,*/ {
           //inside the retrieve message we include our infos so that the node who has the key can send us the info
           ip: global.ADDRESS,
           port: global.PORT,
@@ -30,31 +30,37 @@ module.exports = (params) => {
         })
       )
     }
-    return
   }
-  const searchKey = hashMaker.generateHashFrom(key)
-  //const resolvedLocation = path.resolve(saveLocation)
+  else {
+    const searchKey = hashMaker.generateHashFrom(key)
+    //const resolvedLocation = path.resolve(saveLocation)
 
-  //if there is the searchKey on the fileList then call saveFileToDisk
-  if (global.fileList[searchKey]) return saveFileToDisk(searchKey /*, resolvedLocation*/)
+    //if there is the searchKey on the fileList then call saveFileToDisk
+    if (global.fileList[searchKey]){
+      console.log("What the actual fuck")
+      return saveFileToDisk(searchKey /*, resolvedLocation*/)
+    } 
 
-  if (global.nextNode.ip) {
-    return outSocket.sendCommandTo(
-      //send retrieve message to next node
-      global.nextNode.ip,
-      global.nextNode.port,
-      messageCommand.RETRIEVE,
-      outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,/*, resolvedLocation,*/ {
-        //inside the retrieve message we include our infos so that the node who has the key can send us the info
-        ip: global.ADDRESS,
-        port: global.PORT,
-        id: global.myId
-      })
-    )
+    if (global.nextNode.ip) {
+      console.log("shit has gone sideways")
+      console.log(global.ADDRESS)
+      return outSocket.sendCommandTo(
+        //send retrieve message to next node
+        global.nextNode.ip,
+        global.nextNode.port,
+        messageCommand.RETRIEVE,
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,/*, resolvedLocation,*/ {
+          //inside the retrieve message we include our infos so that the node who has the key can send us the info
+          ip: global.ADDRESS,
+          port: global.PORT,
+          id: global.myId
+        })
+      )
+    }
+
+    // If there is only one node in the network
+    saveFileToDisk()
   }
-
-  // If there is only one node in the network
-  saveFileToDisk()
 }
 
 function saveFileToDisk (searchKey/*, saveLocation*/) {

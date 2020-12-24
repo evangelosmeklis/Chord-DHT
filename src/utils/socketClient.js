@@ -95,7 +95,12 @@ function createCommandPayload (command) {
       return (key, value, sender) => ({
         key,
         value,
-        sender
+        sender:
+        {
+          ip: global.ADDRESS,
+          port: global.PORT,
+          id: global.myId
+        }
       })
     case commandMessages.TRANSFER_ACK:
       return (key) => ({
@@ -110,7 +115,12 @@ function createCommandPayload (command) {
       return (key, saveLocation, sender) => ({
         key,
         saveLocation,
-        sender
+        sender:
+          {
+            ip: global.ADDRESS,
+            port: global.PORT,
+            id: global.myId
+          }
       })
     case commandMessages.FOUND:
       return (key, value, saveLocation) => ({
@@ -119,11 +129,15 @@ function createCommandPayload (command) {
         saveLocation
       })
     case commandMessages.RETRIEVEALL:
-      return (key, saveLocation, sender) => ({
-          key,
+      return (saveLocation, sender) => ({
           saveLocation,
-          sender
-        })
+          sender:
+          {
+            ip: global.ADDRESS,
+            port: global.PORT,
+            id: global.myId
+          }
+      })
   }
 }
 

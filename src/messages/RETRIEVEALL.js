@@ -18,8 +18,8 @@ module.exports = (params) => {
           //send retrieve message to next node
           global.nextNode.ip,
           global.nextNode.port,
-          messageCommand.RETRIEVE,
-          outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(key,/*, resolvedLocation,*/ {
+          messageCommand.RETRIEVEALL,
+          outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(/*, resolvedLocation,*/ {
             //inside the retrieve message we include our infos so that the node who has the key can send us the info
             ip: global.ADDRESS,
             port: global.PORT,
