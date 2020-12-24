@@ -7,6 +7,31 @@ const fs = require('fs')
 
 module.exports = (params) => {
   const [key] /*was key,saveLocation */ = params
+  // print everything that is on the current node
+  if (key == "*") {
+    console.log("---Printing contents of node---" )
+    console.log({ ip: global.ADDRESS, port: global.PORT, id: global.myId })
+    console.log("---Contents---")
+    for (let info in global.fileList){
+      console.log(global.fileList[info])
+    }
+    //next node has to do the same
+    if (global.nextNode.ip) {
+      return outSocket.sendCommandTo(
+        //send retrieve message to next node
+        global.nextNode.ip,
+        global.nextNode.port,
+        messageCommand.RETRIEVE,
+        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(key,/*, resolvedLocation,*/ {
+          //inside the retrieve message we include our infos so that the node who has the key can send us the info
+          ip: global.ADDRESS,
+          port: global.PORT,
+          id: global.myId
+        })
+      )
+    }
+    return
+  }
   const searchKey = hashMaker.generateHashFrom(key)
   //const resolvedLocation = path.resolve(saveLocation)
 
@@ -28,7 +53,7 @@ module.exports = (params) => {
     )
   }
 
-  // Se só houver ele na rede
+  // If there is only one node in the network
   saveFileToDisk()
 }
 

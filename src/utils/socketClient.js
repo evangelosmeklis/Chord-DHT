@@ -118,6 +118,12 @@ function createCommandPayload (command) {
         value,
         saveLocation
       })
+    case commandMessages.RETRIEVEALL:
+      return (key, saveLocation, sender) => ({
+          key,
+          saveLocation,
+          sender
+        })
   }
 }
 
