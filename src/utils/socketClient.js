@@ -140,6 +140,28 @@ function createCommandPayload (command) {
             id: global.myId
           }
       })
+    case commandMessages.DELETE:
+      return (key, saveLocation, sender) => ({
+          key,
+          saveLocation,
+          sender:
+            {
+              ip: global.ADDRESS,
+              port: global.PORT,
+              id: global.myId
+            }
+      })
+      case commandMessages.DELETE_ACK:
+      return (key, saveLocation, sender) => ({
+          key,
+          saveLocation,
+          sender:
+            {
+              ip: global.ADDRESS,
+              port: global.PORT,
+              id: global.myId
+            }
+      })
   }
 }
 

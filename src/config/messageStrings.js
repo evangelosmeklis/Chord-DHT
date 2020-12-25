@@ -12,4 +12,7 @@ module.exports = {
   STORE: 'STORE', // Request to store a pair in the network
   LEAVE: 'LEAVE', // Sends a message to the next node with the info of the previous node
   LEAVE_ACK: 'LEAVE_ACK', // Sent from the successor node, gives permission to leave the network
+  DELETE: 'DELETE',// delete a key from your list
+  DELETE_ACK: 'DELETE_ACK'// delete a key from your list
+
 }

@@ -106,12 +106,12 @@ function openStdIn () {
       const [commandString, ...params] = inStr.split(' ')
       switch (commandString) {
         case 'insert':
+        case 'delete':
         case 'query':
         case 'help':
         case 'depart':
         case 'debug':
         case 'info':
-        case 'contents':
           require(`./consoleCommands/${commandString}`)(params)
           break
         default:
