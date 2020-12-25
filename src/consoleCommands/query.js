@@ -44,7 +44,6 @@ module.exports = (params) => {
     } 
 
     if (global.nextNode.ip) {
-      console.log(global.ADDRESS)
       return outSocket.sendCommandTo(
         //send retrieve message to next node
         global.nextNode.ip,

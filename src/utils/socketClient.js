@@ -123,10 +123,15 @@ function createCommandPayload (command) {
           }
       })
     case commandMessages.FOUND:
-      return (key, value, saveLocation) => ({
+      return (key, value, sender) => ({
         key,
         value,
-        saveLocation
+        sender:
+          {
+            ip: global.ADDRESS,
+            port: global.PORT,
+            id: global.myId
+          }
       })
     case commandMessages.RETRIEVEALL:
       return (thefirst,times,contents, sender) => ({
