@@ -62,7 +62,8 @@ function setUpExitProtocol () {
 /**
  * Creates local connection for message interaction
  */
-function setUpLocalTCPServer () {
+function setUpLocalTCPServer (replication) {
+  global.replication = replication
   // Creates the TCP socket for this node
   const server = inSocket.createServer()
   server.listen(PORT, ADDRESS, () =>
@@ -137,9 +138,9 @@ function setUpUser () {
  * Point of enter
  * @param {{nodePort: number, nodeAddress: string}[]} nodeList List with the known connected nodes
  */
-function start (nodeList) {
+function start (nodeList,replication) {
   try {
-    setUpLocalTCPServer()
+    setUpLocalTCPServer(replication)
     connectToDHT(nodeList)
   } catch (error) {
     logger.error(error.message)

@@ -56,7 +56,8 @@ function createCommandPayload (command) {
         id: global.myId
       })
     case commandMessages.JOIN_ACK:
-      return () => ({
+      return (replication) => ({
+        replication,
         previousNode: {
           port: global.previousNode.port || global.PORT,
           ip: global.previousNode.ip || global.ADDRESS,
@@ -107,9 +108,52 @@ function createCommandPayload (command) {
         key
       })
     case commandMessages.STORE:
-      return (key, value) => ({
+      return (key, value,replication,sender) => ({
         key,
-        value
+        value,
+        replication,
+        sender:
+          {
+            ip: global.ADDRESS,
+            port: global.PORT,
+            id: global.myId
+          }
+      })
+      case commandMessages.STORE_ACK:
+        return (key, value,replication,sender) => ({
+          key,
+          value,
+          replication,
+          sender:
+          {
+            ip: global.ADDRESS,
+            port: global.PORT,
+            id: global.myId
+          }
+        })
+    case commandMessages.REPLICATE:
+      return (key, value,replication) => ({
+        key,
+        value,
+        replication,
+        sender:
+          {
+            ip: global.ADDRESS,
+            port: global.PORT,
+            id: global.myId
+          }
+      })
+    case commandMessages.REPLICATE_ACK:
+      return (key, value,replication) => ({
+          key,
+          value,
+          replication,
+          sender:
+            {
+              ip: global.ADDRESS,
+              port: global.PORT,
+              id: global.myId
+            }
       })
     case commandMessages.RETRIEVE:
       return (key, saveLocation, sender) => ({

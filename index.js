@@ -1,4 +1,16 @@
-const argList = process.argv[2] ? process.argv[2].split(',') : []
+argList = []
+if (process.argv[2]) {
+  if (process.argv[2] == "replication"){
+    replication = process.argv[3]
+  } 
+  else{
+    argList  = process.argv[2].split(',')
+    if (process.argv[3]== 'replication'){
+      replication = process.argv[4]
+    }
+  }
+}
+
 
 const nodeList = argList.map((nodeAddress) => {
   const [address, port] = nodeAddress.split(':')
@@ -8,4 +20,4 @@ const nodeList = argList.map((nodeAddress) => {
   }
 })
 
-require('./src/node').start(nodeList)
+require('./src/node').start(nodeList,replication)

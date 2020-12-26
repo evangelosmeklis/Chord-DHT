@@ -10,9 +10,13 @@ module.exports = {
   TRANSFER: 'TRANSFER', // Request to move a (key,value) pair from one node to another
   TRANSFER_ACK: 'TRANSFER_ACK', // Response that a transfer has been completed succesfully and that the pair can be removed from the list
   STORE: 'STORE', // Request to store a pair in the network
+  STORE_ACK: 'STORE_ACK', // Confirms that the write was succesful
   LEAVE: 'LEAVE', // Sends a message to the next node with the info of the previous node
   LEAVE_ACK: 'LEAVE_ACK', // Sent from the successor node, gives permission to leave the network
   DELETE: 'DELETE',// delete a key from your list
   DELETE_ACK: 'DELETE_ACK',// delete a key from your list
   OVERLAY: 'OVERLAY', //Prints the network topology 
+  REPLICATE: 'REPLICATE', //sent to next nodes in order to replicate current data
+  REPLICATE_ACK: 'REPLICATE_ACK' //Confirms replication was succesfull
+
 }
