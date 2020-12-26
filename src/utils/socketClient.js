@@ -167,6 +167,20 @@ function createCommandPayload (command) {
               id: global.myId
             }
       })
+      case commandMessages.OVERLAY:
+      return (thefirst,times,thenodesid,thenodesip,thenodesport, sender) => ({
+          thefirst,
+          times,
+          thenodesid,
+          thenodesip,
+          thenodesport,
+          sender:
+            {
+              ip: global.ADDRESS,
+              port: global.PORT,
+              id: global.myId
+            }
+      })
   }
 }
 

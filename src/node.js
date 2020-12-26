@@ -108,8 +108,9 @@ function openStdIn () {
         case 'insert':
         case 'delete':
         case 'query':
-        case 'help':
         case 'depart':
+        case 'overlay':
+        case 'help':
         case 'debug':
         case 'info':
           require(`./consoleCommands/${commandString}`)(params)
