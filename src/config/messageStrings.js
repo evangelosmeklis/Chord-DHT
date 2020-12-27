@@ -18,6 +18,4 @@ module.exports = {
   OVERLAY: 'OVERLAY', //Prints the network topology 
   REPLICATE: 'REPLICATE', //sent to next nodes in order to replicate current data
   REPLICATE_ACK: 'REPLICATE_ACK', //Confirms replication was succesfull
-  FINDPORT: 'FINDPORT',
-  FINDPORT_ACK: 'FINDPORT_ACK'
 }
