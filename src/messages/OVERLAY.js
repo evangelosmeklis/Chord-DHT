@@ -22,13 +22,6 @@ module.exports = (params) => {
         zitimes=zitimes+1
         return
       }
-      else {
-        if (zitimes == 0) zitimes = zitimes + 1
-        else { 
-          change=true;
-          zitimes = zitimes + 1
-        }
-      }
     }
 
     if (change == false ){
@@ -46,7 +39,7 @@ module.exports = (params) => {
           global.nextNode.ip,
           global.nextNode.port,
           messageCommand.OVERLAY,
-          outSocket.createCommandPayload(messageCommand.OVERLAY)(zifirst,zitimes,cnodesid,cnodesip,cnodesport,params.sender)
+          outSocket.createCommandPayload(messageCommand.OVERLAY)(zifirst,zitimes,cnodesid,cnodesip,cnodesport,params.senderip,params.senderport,params.senderid)
         )
     }
 }

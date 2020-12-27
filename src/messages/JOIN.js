@@ -15,7 +15,7 @@ module.exports = (params) => {
       params.nodeAddress,
       params.nodePort,
       messageCommand.JOIN_ACK,
-      outSocket.createCommandPayload(messageCommand.JOIN_ACK)()
+      outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication)
     )
 
     //if the current node has a node behind it then it informs it that its next node is going to be the one that just joined the network

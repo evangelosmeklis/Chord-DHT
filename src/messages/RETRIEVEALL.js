@@ -25,13 +25,6 @@ module.exports = (params) => {
         zitimes=zitimes+1
         return
       }
-      else {
-        if (zitimes == 0) zitimes = zitimes + 1
-        else { 
-          change=true;
-          zitimes = zitimes + 1
-        }
-      }
     }
 
     //for every key,value pair in the fileList of the node, put them inside contents
@@ -47,12 +40,7 @@ module.exports = (params) => {
           global.nextNode.ip,
           global.nextNode.port,
           messageCommand.RETRIEVEALL,
-          outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(zifirst,zitimes,ncontents,/*, resolvedLocation,*/ {
-            //inside the retrieve message we include our infos so that the node who has the key can send us the info
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          })
+          outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(zifirst,zitimes,ncontents,global.ADDRESS,global.PORT,global.myId)
         )
     }
 }

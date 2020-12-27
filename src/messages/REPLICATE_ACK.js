@@ -5,5 +5,5 @@ const logger = require('knoblr')
 module.exports = (params) => {
     logger.info("Storing and Replication were succesfull.")
     logger.info("Last replica on node with id,ip,port :")
-    console.log(params.sender.id,params.sender.ip,params.sender.port)
+    console.log(params.senderid,params.senderip,params.senderport)
 }

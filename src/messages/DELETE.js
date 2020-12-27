@@ -14,22 +14,22 @@ module.exports = (params) => {
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.DELETE,
-      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.saveLocation, params.sender)
+      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.saveLocation, params.senderip,params.senderport,params.senderid)
     )
   } else {
     if (!global.fileList[params.key]) {
       // If the pair is not in this node, send message that it was not found
-      return outSocket.sendCommandTo(params.sender.ip, params.sender.port, messageCommand.NOT_FOUND, {})
+      return outSocket.sendCommandTo(params.senderip, params.senderport, messageCommand.NOT_FOUND, {})
     }
     else{
         logger.info("Song was found, deleting...")
         delete global.fileList[params.key]
         logger.info("Deleted.")
         outSocket.sendCommandTo(
-            params.sender.ip,
-            params.sender.port,
+            params.senderip,
+            params.senderport,
             messageCommand.DELETE_ACK,
-            outSocket.createCommandPayload(messageCommand.DELETE_ACK)(params.key, params.saveLocation, params.sender)
+            outSocket.createCommandPayload(messageCommand.DELETE_ACK)(params.key, params.saveLocation, params.senderip,params.senderport,params.senderid)
           )
     }
   }

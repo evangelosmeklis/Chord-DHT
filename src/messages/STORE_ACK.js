@@ -4,5 +4,5 @@ const logger = require('knoblr')
 
 module.exports = (params) => {
     logger.info("Value was written succesfully in the network on node with id,ip,port :")
-    console.log(params.sender.id,params.sender.ip,params.sender.port)
+    console.log(params.senderid,params.senderip,params.senderport)
 }

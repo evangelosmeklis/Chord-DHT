@@ -24,21 +24,18 @@ module.exports = (params) => {
   replication = global.replication
   logger.info(`Sending '${key}' to be stored`)
   const hashKey = hashMaker.generateHashFrom(key) //hashes the key
-  try {
     const val = value.toString('base64') //was previously fs.readFileSync(path.resolve(filePath)).toString('base64')
     if (global.nextNode.ip) {
       //send STORE message to next node
       //console.log(outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val))
+      //console.log('it went in here on insert.js')
+      console.log("next node")
+      console.log(global.nextNode)
       outSocket.sendCommandTo(
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.STORE,
-        outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val,replication,
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          })
+        outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val,replication,global.ADDRESS,global.PORT,global.myId)
       )
     } 
     
@@ -48,15 +45,7 @@ module.exports = (params) => {
         global.ADDRESS,
         global.PORT,
         messageCommand.STORE_ACK,
-        outSocket.createCommandPayload(messageCommand.STORE_ACK)(hashKey, val,replication,
-          {
-            ip: global.ADRESS,
-            port: global.PORT,
-            id: global.myId
-          })
+        outSocket.createCommandPayload(messageCommand.STORE_ACK)(hashKey, val,replication, global.ADDRESS,global.PORT,global.myId)
       )
     }
-  } catch (e) {
-    logger.error('This file could not be found')
-  }
 }

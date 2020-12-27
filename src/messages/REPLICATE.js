@@ -11,34 +11,29 @@ module.exports = (params) => {
             global.nextNode.ip,
             global.nextNode.port,
             messageCommand.REPLICATE,
-            outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication,params.sender)
+            outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication,params.senderip,params.senderport,params.senderid)
         ) 
     }
     else { //so I don't have the key and I must replicate
         global.fileList[params.key] = params.value
         if (params.replication > 1 ){ //if there are more replications to be done send replicate message to next node
-            console.log("---more replications---")
+            //console.log("---more replications---")
             console.log(params.sender)
             outSocket.sendCommandTo(
             global.nextNode.ip,
             global.nextNode.port,
             messageCommand.REPLICATE,
-            outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication-1,params.sender)
+            outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication-1,params.senderip,params.senderport,params.senderid)
             )
         }
         else { //i am the last replica, better inform somebody about that
-            console.log("---I am the last replica---")
-            console.log(params.sender)
+            //console.log("---I am the last replica---")
+            //console.log(params.sender)
             outSocket.sendCommandTo(
-                params.sender.ip,
-                params.sender.port,
+                params.senderip,
+                params.senderport,
                 messageCommand.REPLICATE_ACK,
-                outSocket.createCommandPayload(messageCommand.REPLICATE_ACK)(params.key, params.value,params.replication-1,
-                    {
-                        ip: global.ADDRESS,
-                        port: global.PORT,
-                        id: global.myId
-                    })
+                outSocket.createCommandPayload(messageCommand.REPLICATE_ACK)(params.key, params.value,params.replication-1,global.ADDRESS,global.PORT,global.myId)
             )
         }
     }

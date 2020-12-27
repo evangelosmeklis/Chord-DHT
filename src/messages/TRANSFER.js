@@ -6,8 +6,8 @@ module.exports = (params) => {
 
   //The node that received the transfer info informs the node that sent them that the transfer was successful and the sender can now delete the pair
   outSocket.sendCommandTo(
-    params.sender.ip,
-    params.sender.port,
+    params.senderip,
+    params.senderport,
     messageCommand.TRANSFER_ACK,
     outSocket.createCommandPayload(messageCommand.TRANSFER_ACK)(params.key)
   )

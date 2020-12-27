@@ -21,12 +21,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.DELETE,
-        outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,/*, resolvedLocation,*/ {
-          //inside the retrieve message we include our infos so that the node who has the key can send us the info
-          ip: global.ADDRESS,
-          port: global.PORT,
-          id: global.myId
-        })
+        outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,global.ADDRESS,global.PORT,global.myId)
       )
     }
 

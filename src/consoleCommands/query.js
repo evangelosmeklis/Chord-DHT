@@ -11,41 +11,37 @@ module.exports = (params) => {
     if (i==0) key = key + params[i]
     else key = key + " " + params[i] 
   }
-  console.log(key)
+  //console.log(key)
   // print everything that is on the current node
   if (key == "*") {
     contents = []
-    //console.log("---Printing contents of node---" )
-    //console.log({ ip: global.ADDRESS, port: global.PORT, id: global.myId })
-    //console.log("---Contents---")
+    
+    for (let info in global.fileList){
+      contents.push(global.fileList[info])
+    }
+
     //next node has to do the same
     if (global.nextNode.ip) {
       thefirst = global.myId
-      times = 0
+      times = 1
       //we use the first and contents variables. The first is used for the system to know that it has made a full circle when it finds the first id again
       //the contents is to keep all the contents in the array to return them to the first node that made the query with *
       return outSocket.sendCommandTo(
         //send retrieve message to next node
-        global.ADDRESS,
-        global.PORT,
+        global.nextNode.id,
+        global.nextNode.port,
         messageCommand.RETRIEVEALL,
-        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(thefirst,times,contents,/*, resolvedLocation,*/ {
-          //inside the retrieve message we include our infos so that the node who has the key can send us the info
-          ip: global.ADDRESS,
-          port: global.PORT,
-          id: global.myId
-        })
+        outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(thefirst,times,contents,global.ADDRESS,global.PORT,global.myId)
       )
     }
   }
 
   else {
     const searchKey = hashMaker.generateHashFrom(key)
-    //const resolvedLocation = path.resolve(saveLocation)
 
     //if there is the searchKey on the fileList then call saveFileToDisk
     if (global.fileList[searchKey]){
-      return saveFileToDisk(searchKey /*, resolvedLocation*/)
+      return saveFileToDisk(searchKey)
     } 
 
     if (global.nextNode.ip) {
@@ -54,12 +50,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication, {
-          //inside the retrieve message we include our infos so that the node who has the key can send us the info
-          ip: global.ADDRESS,
-          port: global.PORT,
-          id: global.myId
-        })
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,global.ADDRESS,global.PORT,global.myId)
       )
     }
 
@@ -68,12 +59,10 @@ module.exports = (params) => {
   }
 }
 
-function saveFileToDisk (searchKey/*, saveLocation*/) {
+function saveFileToDisk (searchKey) {
   if (!global.fileList[searchKey]) return logger.error(`Could not find searched key`)
 
   logger.info('Key exists locally. Retrieving...')
-  const fileContents = global.fileList[searchKey]//Buffer.from(global.fileList[searchKey], 'base64')
+  const fileContents = global.fileList[searchKey]
   logger.info(fileContents);
-  //fs.writeFileSync(saveLocation, fileContents)
-  //logger.info(`File saved at '${saveLocation}'`)
 }

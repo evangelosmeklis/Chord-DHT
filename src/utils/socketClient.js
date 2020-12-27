@@ -30,10 +30,10 @@ function handleError (err) {
 
 /**
  *
- * @param {string} address Endereço do destinatário
- * @param {number} port Porta do destinatário
- * @param {string} command String do comando
- * @param {*} params Parâmetros do comando
+ * @param {string} address Destination Address
+ * @param {number} port Destination port
+ * @param {string} command Command String
+ * @param {*} params Command Parameters
  */
 function sendCommandTo (address, port, command, params, errorCb = handleError) {
   const fullCommand = {
@@ -93,117 +93,104 @@ function createCommandPayload (command) {
         nextId: global.myId
       })
     case commandMessages.TRANSFER:
-      return (key, value, sender) => ({
+      return (key, value, senderip,senderport,senderid) => ({
         key,
         value,
-        sender:
-        {
-          ip: global.ADDRESS,
-          port: global.PORT,
-          id: global.myId
-        }
+        senderip,
+        senderport,
+        senderid
       })
     case commandMessages.TRANSFER_ACK:
       return (key) => ({
         key
       })
     case commandMessages.STORE:
-      return (key, value,replication,sender) => ({
+      return (key, value,replication,senderip,senderport,senderid) => ({
         key,
         value,
         replication,
-        sender
+        senderip,
+        senderport,
+        senderid
       })
       case commandMessages.STORE_ACK:
-        return (key, value,replication,sender) => ({
+        return (key, value,replication,senderip,senderport,senderid) => ({
           key,
           value,
           replication,
-          sender:
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          }
+          senderip,
+          senderport,
+          senderid
         })
     case commandMessages.REPLICATE:
-      return (key, value,replication,sender) => ({
+      return (key, value,replication,senderip,senderport,senderid) => ({
         key,
         value,
         replication,
-        sender
+        senderip,
+        senderport,
+        senderid
       })
     case commandMessages.REPLICATE_ACK:
-      return (key, value,replication,sender) => ({
+      return (key, value,replication,senderip,senderport,senderid) => ({
           key,
           value,
           replication,
-          sender:
-            {
-              ip: global.ADDRESS,
-              port: global.PORT,
-              id: global.myId
-            }
+          senderip,
+          senderport,
+          senderid
       })
     case commandMessages.RETRIEVE:
-      return (key,replication, sender) => ({
+      return (key,replication, senderip,senderport,senderid) => ({
         key,
         replication,
-        sender
+        senderip,
+        senderport,
+        senderid
       })
     case commandMessages.FOUND:
-      return (key, value, sender) => ({
+      return (key, value, senderip,senderport,senderid) => ({
         key,
         value,
-        sender:
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          }
+        senderip,
+        senderport,
+        senderid
       })
     case commandMessages.RETRIEVEALL:
-      return (thefirst,times,contents, sender) => ({
+      return (thefirst,times,contents, senderip,senderport,senderid) => ({
           thefirst,
           times,
           contents,
-          sender
+          senderip,
+          senderport,
+          senderid
       })
     case commandMessages.DELETE:
-      return (key, saveLocation, sender) => ({
+      return (key, saveLocation, senderip,senderport,senderid) => ({
           key,
           saveLocation,
-          sender:
-            {
-              ip: global.ADDRESS,
-              port: global.PORT,
-              id: global.myId
-            }
+          senderip,
+          senderport,
+          senderid
       })
       case commandMessages.DELETE_ACK:
-      return (key, saveLocation, sender) => ({
+      return (key, saveLocation, senderip,senderport,senderid) => ({
           key,
           saveLocation,
-          sender:
-            {
-              ip: global.ADDRESS,
-              port: global.PORT,
-              id: global.myId
-            }
+          senderip,
+          senderport,
+          senderid
       })
       case commandMessages.OVERLAY:
-      return (thefirst,times,thenodesid,thenodesip,thenodesport, sender) => ({
+      return (thefirst,times,thenodesid,thenodesip,thenodesport, senderip,senderport,senderid) => ({
           thefirst,
           times,
           thenodesid,
           thenodesip,
           thenodesport,
-          sender:
-            {
-              ip: global.ADDRESS,
-              port: global.PORT,
-              id: global.myId
-            }
+          senderip,
+          senderport,
+          senderid
       })
   }
 }

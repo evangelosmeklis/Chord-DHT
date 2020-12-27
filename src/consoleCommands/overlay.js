@@ -9,19 +9,19 @@ module.exports = (params) => {
     var cnodesid = []
     var cnodesip = []
     var cnodesport = []
-    //cnodesid.push(global.myId)
-    //cnodesip.push(global.ADDRESS)
-    //cnodesport.push(global.PORT)
+    cnodesid.push(global.myId)
+    cnodesip.push(global.ADDRESS)
+    cnodesport.push(global.PORT)
 
     if (global.nextNode.ip) {
       thefirst = global.myId
-      times = 0
+      times = 1
       return outSocket.sendCommandTo(
         //send overlay message to next node
-        global.ADDRESS,
-        global.PORT,
+        global.nextNode.ip,
+        global.nextNode.port,
         messageCommand.OVERLAY,
-        outSocket.createCommandPayload(messageCommand.OVERLAY)(thefirst,times,cnodesid,cnodesip,cnodesport,params.sender)
+        outSocket.createCommandPayload(messageCommand.OVERLAY)(thefirst,times,cnodesid,cnodesip,cnodesport,global.ADDRESS,global.PORT,global.myId)
       )
     }
 
