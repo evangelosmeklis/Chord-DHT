@@ -14,7 +14,7 @@ module.exports = (params) => {
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.DELETE,
-      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.saveLocation, params.senderip,params.senderport,params.senderid)
+      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.senderip,params.senderport,params.senderid)
     )
   } else {
     if (!global.fileList[params.key]) {
@@ -29,7 +29,7 @@ module.exports = (params) => {
             params.senderip,
             params.senderport,
             messageCommand.DELETE_ACK,
-            outSocket.createCommandPayload(messageCommand.DELETE_ACK)(params.key, params.saveLocation, params.senderip,params.senderport,params.senderid)
+            outSocket.createCommandPayload(messageCommand.DELETE_ACK)(params.key, params.senderip,params.senderport,params.senderid)
           )
     }
   }

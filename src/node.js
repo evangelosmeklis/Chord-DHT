@@ -66,6 +66,8 @@ function setUpLocalTCPServer (replication) {
   global.replication = replication
   // Creates the TCP socket for this node
   const server = inSocket.createServer()
+  //console.log(global.PORT)
+  //console.log(PORT)
   server.listen(PORT, ADDRESS, () =>
     logger.info(`Server listening on ${server.address().address}:${server.address().port}`)
   )
@@ -134,6 +136,19 @@ function setUpUser () {
   openStdIn()
 }
 
+// Deals with sudden exits on a known event
+function setUpExitProtocol () {
+  process.on('SIGINT', () => process.exit(34)) // 34 is a random code that we use to define a sudden exit
+  //A known exit event
+  process.on('exit', (code) => {
+    console.log() // New line after ctrl+C
+
+    if (code === 34) {
+      logger.info('Detecting exit')
+      require('./consoleCommands/depart')() // Execute exit command
+    }
+  })
+}
 /**
  * Point of enter
  * @param {{nodePort: number, nodeAddress: string}[]} nodeList List with the known connected nodes

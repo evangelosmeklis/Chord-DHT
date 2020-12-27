@@ -6,13 +6,12 @@ const path = require('path')
 const fs = require('fs')
 
 module.exports = (params) => {
-    const [key] /*was key,saveLocation */ = params
+    const [key] = params
     const searchKey = hashMaker.generateHashFrom(key)
-    //const resolvedLocation = path.resolve(saveLocation)
 
     //if there is the searchKey on the fileList then call saveFileToDisk
     if (global.fileList[searchKey]){
-      return saveFileToDisk(searchKey /*, resolvedLocation*/)
+      return saveFileToDisk(searchKey)
     } 
 
     if (global.nextNode.ip) {
@@ -30,12 +29,10 @@ module.exports = (params) => {
 }
 
 
-function saveFileToDisk (searchKey/*, saveLocation*/) {
+function saveFileToDisk (searchKey) {
   if (!global.fileList[searchKey]) return logger.error(`Could not find searched key`)
 
   logger.info('Key exists locally. Deleting...')
   delete global.fileList[searchKey]
   logger.info("Deleted.");
-  //fs.writeFileSync(saveLocation, fileContents)
-  //logger.info(`File saved at '${saveLocation}'`)
 }

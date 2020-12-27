@@ -166,17 +166,15 @@ function createCommandPayload (command) {
           senderid
       })
     case commandMessages.DELETE:
-      return (key, saveLocation, senderip,senderport,senderid) => ({
+      return (key, senderip,senderport,senderid) => ({
           key,
-          saveLocation,
           senderip,
           senderport,
           senderid
       })
       case commandMessages.DELETE_ACK:
-      return (key, saveLocation, senderip,senderport,senderid) => ({
+      return (key, senderip,senderport,senderid) => ({
           key,
-          saveLocation,
           senderip,
           senderport,
           senderid
@@ -191,6 +189,15 @@ function createCommandPayload (command) {
           senderip,
           senderport,
           senderid
+      })
+      case commandMessages.FINDPORT:
+      return (senderip,senderport) => ({
+          senderip,
+          senderport,
+      })
+      case commandMessages.FINDPORT_ACK:
+      return (port) => ({
+          port
       })
   }
 }
