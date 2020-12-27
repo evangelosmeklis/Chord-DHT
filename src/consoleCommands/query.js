@@ -49,7 +49,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,/*, resolvedLocation,*/ {
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication, {
           //inside the retrieve message we include our infos so that the node who has the key can send us the info
           ip: global.ADDRESS,
           port: global.PORT,

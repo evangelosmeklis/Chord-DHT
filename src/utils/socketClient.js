@@ -146,15 +146,10 @@ function createCommandPayload (command) {
             }
       })
     case commandMessages.RETRIEVE:
-      return (key, saveLocation, sender) => ({
+      return (key,replication, sender) => ({
         key,
-        saveLocation,
-        sender:
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          }
+        replication,
+        sender
       })
     case commandMessages.FOUND:
       return (key, value, sender) => ({
@@ -172,12 +167,7 @@ function createCommandPayload (command) {
           thefirst,
           times,
           contents,
-          sender:
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          }
+          sender
       })
     case commandMessages.DELETE:
       return (key, saveLocation, sender) => ({
