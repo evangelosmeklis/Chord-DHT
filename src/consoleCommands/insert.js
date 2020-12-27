@@ -6,7 +6,7 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = (params) => {
-  console.log(params.length)
+  //console.log(params.length)
   var value = ""
   var key = params[params.length-1]
   for (i=0; i<params.length-1; i++){
@@ -18,9 +18,9 @@ module.exports = (params) => {
     }
     else value = value + " " + params[i]
   }
-  console.log(params)
-  console.log(key)
-  console.log(value)
+  temp = key
+  key = value
+  value = temp
   replication = global.replication
   logger.info(`Sending '${key}' to be stored`)
   const hashKey = hashMaker.generateHashFrom(key) //hashes the key
