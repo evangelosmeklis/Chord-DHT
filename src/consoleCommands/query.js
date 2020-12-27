@@ -6,7 +6,12 @@ const path = require('path')
 const fs = require('fs')
 
 module.exports = (params) => {
-  const [key] /*was key,saveLocation */ = params
+  key = ""
+  for (i=0;i<params.length;i++){
+    if (i==0) key = key + params[i]
+    else key = key + " " + params[i] 
+  }
+  console.log(key)
   // print everything that is on the current node
   if (key == "*") {
     contents = []
