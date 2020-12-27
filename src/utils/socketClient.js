@@ -112,12 +112,7 @@ function createCommandPayload (command) {
         key,
         value,
         replication,
-        sender:
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          }
+        sender
       })
       case commandMessages.STORE_ACK:
         return (key, value,replication,sender) => ({
@@ -132,19 +127,14 @@ function createCommandPayload (command) {
           }
         })
     case commandMessages.REPLICATE:
-      return (key, value,replication) => ({
+      return (key, value,replication,sender) => ({
         key,
         value,
         replication,
-        sender:
-          {
-            ip: global.ADDRESS,
-            port: global.PORT,
-            id: global.myId
-          }
+        sender
       })
     case commandMessages.REPLICATE_ACK:
-      return (key, value,replication) => ({
+      return (key, value,replication,sender) => ({
           key,
           value,
           replication,

@@ -14,7 +14,7 @@ module.exports = (params) => {
     const fileContent = filePath.toString('base64') //was previously fs.readFileSync(path.resolve(filePath)).toString('base64')
     if (global.nextNode.ip) {
       //send STORE message to next node
-      console.log(outSocket.createCommandPayload(messageCommand.STORE)(hashKey, fileContent))
+      //console.log(outSocket.createCommandPayload(messageCommand.STORE)(hashKey, fileContent))
       outSocket.sendCommandTo(
         global.nextNode.ip,
         global.nextNode.port,

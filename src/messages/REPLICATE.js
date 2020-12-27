@@ -17,6 +17,8 @@ module.exports = (params) => {
     else { //so I don't have the key and I must replicate
         global.fileList[params.key] = params.value
         if (params.replication > 1 ){ //if there are more replications to be done send replicate message to next node
+            console.log("---more replications---")
+            console.log(params.sender)
             outSocket.sendCommandTo(
             global.nextNode.ip,
             global.nextNode.port,
@@ -25,6 +27,8 @@ module.exports = (params) => {
             )
         }
         else { //i am the last replica, better inform somebody about that
+            console.log("---I am the last replica---")
+            console.log(params.sender)
             outSocket.sendCommandTo(
                 params.sender.ip,
                 params.sender.port,

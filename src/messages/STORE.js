@@ -12,6 +12,8 @@ module.exports = (params) => {
   if (Math.abs(idChecksum - keyChecksum) <= Math.abs(nextIdChecksum - keyChecksum)) {
     global.fileList[params.key] = params.value
     if (params.replication > 1 ){ //if I have to replicate send a replication message that includes the sender so we can send the ACK
+      console.log("---I have to replicate---")
+      console.log(params.sender)
       outSocket.sendCommandTo(
         global.nextNode.ip,
         global.nextNode.port,
