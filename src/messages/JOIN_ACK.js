@@ -6,7 +6,8 @@ module.exports = (params) => {
   else if (global.type == 1 ) thetype = "eventual consistency"
 
   console.log("Replication type: " + thetype)
-
+  global.weare = params.weare
+  console.log("We are now: " + global.weare + " nodes in the network")
   global.nextNode = params.nextNode
   global.previousNode = params.previousNode
 }

@@ -13,6 +13,7 @@ global.nextNode = { ip: null, port: null, id: null } // Creates the next node re
 global.previousNode = { ip: null, port: null, id: null } // Creates the previous node reference
 global.stats = {}
 global.DEBUG = 0
+global.weare = 1
 
 /**
  * Tries to connect to the first node on the network
