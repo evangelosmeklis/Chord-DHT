@@ -171,8 +171,9 @@ function createCommandPayload (command) {
           senderid
       })
     case commandMessages.DELETE:
-      return (key, senderip,senderport,senderid) => ({
+      return (key,replication,senderip,senderport,senderid) => ({
           key,
+          replication,
           senderip,
           senderport,
           senderid

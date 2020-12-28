@@ -11,7 +11,12 @@ module.exports = (params) => {
 
     //if there is the searchKey on the fileList then call saveFileToDisk
     if (global.fileList[searchKey]){
-      return saveFileToDisk(searchKey)
+      if (global.replication<=1) return saveFileToDisk(searchKey)
+      else {
+        logger.info('Key exists locally, but has other replicas too. Deleting...')
+        delete global.fileList[searchKey]
+        global.replication = global.replication - 1
+      }
     } 
 
     if (global.nextNode.ip) {
@@ -20,7 +25,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.DELETE,
-        outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,global.ADDRESS,global.PORT,global.myId)
+        outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,global.replication,global.ADDRESS,global.PORT,global.myId)
       )
     }
 

@@ -19,7 +19,7 @@ if (process.argv[4]){
     else if (process.argv[5] == "eventual-consistency" ) type = 1
     else {
       type = 0
-      logger.info("type not recognized. Implementing chain replication")
+      console.log("type not recognized. Implementing chain replication")
     }
   } 
 }

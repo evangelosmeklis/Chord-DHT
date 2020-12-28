@@ -22,15 +22,28 @@ module.exports = (params) => {
       return outSocket.sendCommandTo(params.senderip, params.senderport, messageCommand.NOT_FOUND, {})
     }
     else{
-        logger.info("Song was found, deleting...")
-        delete global.fileList[params.key]
-        logger.info("Deleted.")
-        outSocket.sendCommandTo(
-            params.senderip,
-            params.senderport,
-            messageCommand.DELETE_ACK,
-            outSocket.createCommandPayload(messageCommand.DELETE_ACK)(params.key, params.senderip,params.senderport,params.senderid)
-          )
+        if (params.replication <=1){
+          logger.info("Song was found, deleting...")
+          delete global.fileList[params.key]
+          logger.info("Deleted.")
+          outSocket.sendCommandTo(
+              params.senderip,
+              params.senderport,
+              messageCommand.DELETE_ACK,
+              outSocket.createCommandPayload(messageCommand.DELETE_ACK)(params.key, params.senderip,params.senderport,params.senderid)
+            )
+        }
+        else {
+          logger.info("Song was found, deleting...")
+          delete global.fileList[params.key]
+          logger.info("Deleted.")
+          outSocket.sendCommandTo(
+              global.nextNode.ip,
+              params.nextNode.port,
+              messageCommand.DELETE,
+              outSocket.createCommandPayload(messageCommand.DELETE)(params.key,params.replication-1, params.senderip,params.senderport,params.senderid)
+            )
+        }
     }
   }
 }
