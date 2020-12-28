@@ -50,7 +50,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,global.ADDRESS,global.PORT,global.myId)
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,global.type,global.ADDRESS,global.PORT,global.myId)
       )
     }
     else saveFileToDisk() //only one node in the network

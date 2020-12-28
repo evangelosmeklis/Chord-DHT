@@ -14,7 +14,7 @@ module.exports = (params) => {
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.RETRIEVE,
-      outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key, params.replication, params.senderip,params.senderport,params.senderid)
+      outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key, params.replication, params.type,params.senderip,params.senderport,params.senderid)
     )
   } else {
     if (!global.fileList[params.key]) {
@@ -22,7 +22,15 @@ module.exports = (params) => {
       return outSocket.sendCommandTo(params.senderip, params.senderport, messageCommand.NOT_FOUND, {})
     }
     //if the node has the pair then send the info back to the sender
-    if (params.replication<=1){
+    if (params.replication<=1 && params.type == 0){
+      outSocket.sendCommandTo(
+        params.senderip,
+        params.senderport,
+        messageCommand.FOUND,
+        outSocket.createCommandPayload(messageCommand.FOUND)(params.key, global.fileList[params.key],global.ADDRESS,global.PORT,global.myId)
+      )
+    }
+    else if (params.replication > 1 && params.type == 1){
       outSocket.sendCommandTo(
         params.senderip,
         params.senderport,
@@ -36,7 +44,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key,params.replication-1, params.senderip,params.senderport,params.senderid)
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key,params.replication-1,params.type,params.senderip,params.senderport,params.senderid)
       )
     }
   }

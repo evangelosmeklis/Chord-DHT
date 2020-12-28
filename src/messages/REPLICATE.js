@@ -23,17 +23,17 @@ module.exports = (params) => {
             global.nextNode.ip,
             global.nextNode.port,
             messageCommand.REPLICATE,
-            outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication-1,params.senderip,params.senderport,params.senderid)
+            outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication-1,params.type,params.senderip,params.senderport,params.senderid)
             )
         }
-        else { //i am the last replica, better inform somebody about that
+        else if (params.replication <=1 && params.type==0) { //i am the last replica, better inform somebody about that
             //console.log("---I am the last replica---")
             //console.log(params.sender)
             outSocket.sendCommandTo(
                 params.senderip,
                 params.senderport,
                 messageCommand.REPLICATE_ACK,
-                outSocket.createCommandPayload(messageCommand.REPLICATE_ACK)(params.key, params.value,params.replication-1,global.ADDRESS,global.PORT,global.myId)
+                outSocket.createCommandPayload(messageCommand.REPLICATE_ACK)(params.key, params.value,params.replication-1,params.type,global.ADDRESS,global.PORT,global.myId)
             )
         }
     }
