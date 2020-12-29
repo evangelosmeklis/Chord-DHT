@@ -181,32 +181,29 @@ function createCommandPayload (command) {
           senderid
       })
       case commandMessages.DELETE_ACK:
-      return (key, senderip,senderport,senderid) => ({
-          key,
-          senderip,
-          senderport,
-          senderid
-      })
+        return (key, senderip,senderport,senderid) => ({
+            key,
+            senderip,
+            senderport,
+            senderid
+        })
       case commandMessages.OVERLAY:
-      return (thefirst,times,thenodesid,thenodesip,thenodesport, senderip,senderport,senderid) => ({
-          thefirst,
-          times,
-          thenodesid,
-          thenodesip,
-          thenodesport,
-          senderip,
-          senderport,
-          senderid
-      })
-      case commandMessages.FINDPORT:
-      return (senderip,senderport) => ({
-          senderip,
-          senderport,
-      })
-      case commandMessages.FINDPORT_ACK:
-      return (port) => ({
-          port
-      })
+        return (thefirst,times,thenodesid,thenodesip,thenodesport, senderip,senderport,senderid) => ({
+            thefirst,
+            times,
+            thenodesid,
+            thenodesip,
+            thenodesport,
+            senderip,
+            senderport,
+            senderid
+        })
+      case commandMessages.NODECOUNT:
+        return (thefirst,times,weare) => ({
+            thefirst,
+            times,
+            weare
+        })
   }
 }
 

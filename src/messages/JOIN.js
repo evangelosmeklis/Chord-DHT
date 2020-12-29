@@ -19,6 +19,16 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare)
     )
 
+    if (global.weare>2){
+      outSocket.sendCommandTo(
+        //Informs other nodes of the current number of nodes
+        global.nextNode.ip,
+        global.nextNode.port,
+        messageCommand.NODECOUNT,
+        outSocket.createCommandPayload(messageCommand.NODECOUNT)(global.myId,1,global.weare)
+      )
+    }
+
     //if the current node has a node behind it then it informs it that its next node is going to be the one that just joined the network
     if (global.previousNode.ip) {
       outSocket.sendCommandTo(
@@ -47,7 +57,7 @@ module.exports = (params) => {
     }
 
     //console.log(global.weare-1)
-    console.log(global.replication)
+    //console.log(global.replication)
     if (global.weare-1 < global.replication){ //if the number of nodes in the network is less than the replicas needed, then we need to transfer all 
                                         //the files to the new nodes so that the replicas number is met
       //console.log("Helooo")
