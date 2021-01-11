@@ -2,6 +2,7 @@ const outSocket = require('../utils/socketClient')
 const messageCommand = require('../config/messageStrings')
 
 module.exports = (params) => {
+  global.weare = global.weare + 1
   const idChecksum = parseInt(global.myId, 16)
   const ingressNodeChecksum = parseInt(params.id, 16)
   const nextNodeChecksum = global.nextNode.id ? parseInt(global.nextNode.id, 16) : 0
@@ -15,8 +16,18 @@ module.exports = (params) => {
       params.nodeAddress,
       params.nodePort,
       messageCommand.JOIN_ACK,
-      outSocket.createCommandPayload(messageCommand.JOIN_ACK)()
+      outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare)
     )
+
+    if (global.weare>2){
+      outSocket.sendCommandTo(
+        //Informs other nodes of the current number of nodes
+        global.nextNode.ip,
+        global.nextNode.port,
+        messageCommand.NODECOUNT,
+        outSocket.createCommandPayload(messageCommand.NODECOUNT)(global.myId,1,global.weare)
+      )
+    }
 
     //if the current node has a node behind it then it informs it that its next node is going to be the one that just joined the network
     if (global.previousNode.ip) {
@@ -45,6 +56,21 @@ module.exports = (params) => {
       id: params.id
     }
 
+    //console.log(global.weare-1)
+    //console.log(global.replication)
+    if (global.weare-1 < global.replication){ //if the number of nodes in the network is less than the replicas needed, then we need to transfer all 
+                                        //the files to the new nodes so that the replicas number is met
+      //console.log("Helooo")
+      for (let fileHashName in global.fileList) {
+        outSocket.sendCommandTo(
+            params.nodeAddress,
+            params.nodePort,
+            messageCommand.TRANSFER,
+            outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName],1,global.ADDRESS,global.PORT,global.myId)
+        )
+      }
+    }
+
     //The files that are no longer supposed to be here (because of the way that the key,value pairs are stored) should go were they are supposed to be
     if (Object.keys(global.fileList).length > 0) {
       //for every key value pair in the nodes filelist we check if it should be put somewhere else (because of the new node that just joined)
@@ -55,11 +81,7 @@ module.exports = (params) => {
             params.nodeAddress,
             params.nodePort,
             messageCommand.TRANSFER,
-            outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName], {
-              ip: global.ADDRESS,
-              port: global.PORT,
-              id: global.myId
-            })
+            outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName],0, global.ADDRESS,global.PORT,global.myId)
           )
         }
       }

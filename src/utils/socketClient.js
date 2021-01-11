@@ -30,10 +30,10 @@ function handleError (err) {
 
 /**
  *
- * @param {string} address Endereço do destinatário
- * @param {number} port Porta do destinatário
- * @param {string} command String do comando
- * @param {*} params Parâmetros do comando
+ * @param {string} address Destination Address
+ * @param {number} port Destination port
+ * @param {string} command Command String
+ * @param {*} params Command Parameters
  */
 function sendCommandTo (address, port, command, params, errorCb = handleError) {
   const fullCommand = {
@@ -56,7 +56,10 @@ function createCommandPayload (command) {
         id: global.myId
       })
     case commandMessages.JOIN_ACK:
-      return () => ({
+      return (replication,type,weare) => ({
+        replication,
+        type,
+        weare,
         previousNode: {
           port: global.previousNode.port || global.PORT,
           ip: global.previousNode.ip || global.ADDRESS,
@@ -92,32 +95,115 @@ function createCommandPayload (command) {
         nextId: global.myId
       })
     case commandMessages.TRANSFER:
-      return (key, value, sender) => ({
+      return (key, value,forep,senderip,senderport,senderid) => ({
         key,
         value,
-        sender
+        forep,
+        senderip,
+        senderport,
+        senderid
       })
     case commandMessages.TRANSFER_ACK:
       return (key) => ({
         key
       })
     case commandMessages.STORE:
-      return (key, value) => ({
-        key,
-        value
-      })
-    case commandMessages.RETRIEVE:
-      return (key, saveLocation, sender) => ({
-        key,
-        saveLocation,
-        sender
-      })
-    case commandMessages.FOUND:
-      return (key, value, saveLocation) => ({
+      return (key, value,replication,type,senderip,senderport,senderid) => ({
         key,
         value,
-        saveLocation
+        type,
+        replication,
+        senderip,
+        senderport,
+        senderid
       })
+      case commandMessages.STORE_ACK:
+        return (key, value,replication,senderip,senderport,senderid) => ({
+          key,
+          value,
+          replication,
+          senderip,
+          senderport,
+          senderid
+        })
+    case commandMessages.REPLICATE:
+      return (key, value,replication,type,senderip,senderport,senderid) => ({
+        key,
+        value,
+        replication,
+        type,
+        senderip,
+        senderport,
+        senderid
+      })
+    case commandMessages.REPLICATE_ACK:
+      return (key, value,replication,type,senderip,senderport,senderid) => ({
+          key,
+          value,
+          replication,
+          type,
+          senderip,
+          senderport,
+          senderid
+      })
+    case commandMessages.RETRIEVE:
+      return (key,replication,type, senderip,senderport,senderid) => ({
+        key,
+        replication,
+        type,
+        senderip,
+        senderport,
+        senderid
+      })
+    case commandMessages.FOUND:
+      return (key, value, senderip,senderport,senderid) => ({
+        key,
+        value,
+        senderip,
+        senderport,
+        senderid
+      })
+    case commandMessages.RETRIEVEALL:
+      return (thefirst,times,contents, senderip,senderport,senderid) => ({
+          thefirst,
+          times,
+          contents,
+          senderip,
+          senderport,
+          senderid
+      })
+    case commandMessages.DELETE:
+      return (key,replication,senderip,senderport,senderid) => ({
+          key,
+          replication,
+          senderip,
+          senderport,
+          senderid
+      })
+      case commandMessages.DELETE_ACK:
+        return (key, senderip,senderport,senderid) => ({
+            key,
+            senderip,
+            senderport,
+            senderid
+        })
+      case commandMessages.OVERLAY:
+        return (thefirst,times,thenodesid,thenodesip,thenodesport, senderip,senderport,senderid) => ({
+            thefirst,
+            times,
+            thenodesid,
+            thenodesip,
+            thenodesport,
+            senderip,
+            senderport,
+            senderid
+        })
+      case commandMessages.NODECOUNT:
+        return (thefirst,times,weare) => ({
+            thefirst,
+            times,
+            weare
+        })
   }
 }
 

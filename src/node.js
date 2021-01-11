@@ -13,6 +13,7 @@ global.nextNode = { ip: null, port: null, id: null } // Creates the next node re
 global.previousNode = { ip: null, port: null, id: null } // Creates the previous node reference
 global.stats = {}
 global.DEBUG = 0
+global.weare = 1
 
 /**
  * Tries to connect to the first node on the network
@@ -54,7 +55,7 @@ function setUpExitProtocol () {
 
     if (code === 34) {
       logger.info('Detecting exit')
-      require('./consoleCommands/leave')() // Execute exit command
+      require('./consoleCommands/depart')() // Execute exit command
     }
   })
 }
@@ -62,9 +63,13 @@ function setUpExitProtocol () {
 /**
  * Creates local connection for message interaction
  */
-function setUpLocalTCPServer () {
+function setUpLocalTCPServer (replication,type) {
+  global.replication = replication
+  global.type = type
   // Creates the TCP socket for this node
   const server = inSocket.createServer()
+  //console.log(global.PORT)
+  //console.log(PORT)
   server.listen(PORT, ADDRESS, () =>
     logger.info(`Server listening on ${server.address().address}:${server.address().port}`)
   )
@@ -106,9 +111,11 @@ function openStdIn () {
       const [commandString, ...params] = inStr.split(' ')
       switch (commandString) {
         case 'insert':
+        case 'delete':
         case 'query':
-        case 'help':
         case 'depart':
+        case 'overlay':
+        case 'help':
         case 'debug':
         case 'info':
           require(`./consoleCommands/${commandString}`)(params)
@@ -131,13 +138,26 @@ function setUpUser () {
   openStdIn()
 }
 
+// Deals with sudden exits on a known event
+function setUpExitProtocol () {
+  process.on('SIGINT', () => process.exit(34)) // 34 is a random code that we use to define a sudden exit
+  //A known exit event
+  process.on('exit', (code) => {
+    console.log() // New line after ctrl+C
+
+    if (code === 34) {
+      logger.info('Detecting exit')
+      require('./consoleCommands/depart')() // Execute exit command
+    }
+  })
+}
 /**
  * Point of enter
  * @param {{nodePort: number, nodeAddress: string}[]} nodeList List with the known connected nodes
  */
-function start (nodeList) {
+function start (nodeList,replication,type) {
   try {
-    setUpLocalTCPServer()
+    setUpLocalTCPServer(replication,type)
     connectToDHT(nodeList)
   } catch (error) {
     logger.error(error.message)
