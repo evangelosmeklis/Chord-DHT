@@ -18,7 +18,7 @@ module.exports = (params) => {
         global.fileList[params.key] = params.value
         if (params.replication > 1 ){ //if there are more replications to be done send replicate message to next node
             //console.log("---more replications---")
-            console.log(params.sender)
+            //console.log(params.sender)
             outSocket.sendCommandTo(
             global.nextNode.ip,
             global.nextNode.port,
