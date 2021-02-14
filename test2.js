@@ -126,7 +126,7 @@ fs.readFile('query.txt', 'utf8', function (err,data) {
             sndrip,
             sndrport,
             messageCommand.RETRIEVE,
-            outSocket.createCommandPayload(messageCommand.RETRIEVE)(hashKey, val,replication,type,rcvip,rcvport,rcvid)
+            outSocket.createCommandPayload(messageCommand.RETRIEVE)(hashKey,replication,type,rcvip,rcvport,rcvid)
           )
         console.log(line);
     })
