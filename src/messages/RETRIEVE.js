@@ -22,7 +22,7 @@ module.exports = (params) => {
       return outSocket.sendCommandTo(params.senderip, params.senderport, messageCommand.NOT_FOUND, {})
     }
     //if the node has the pair then send the info back to the sender
-    if (params.replication<=1 && params.type == 0){
+    if (params.replication<=0 && params.type == 0){
       outSocket.sendCommandTo(
         params.senderip,
         params.senderport,
