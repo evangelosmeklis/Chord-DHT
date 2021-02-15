@@ -31,7 +31,7 @@ module.exports = (params) => {
       //console.log('it went in here on insert.js')
       //console.log("next node")
       //console.log(global.nextNode)
-      console.log(replication)
+      //console.log(replication)
       outSocket.sendCommandTo(
         global.nextNode.ip,
         global.nextNode.port,

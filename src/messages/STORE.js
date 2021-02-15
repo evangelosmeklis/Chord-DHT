@@ -40,7 +40,7 @@ module.exports = (params) => {
       //console.log("it went in here 2 on store.js")
       //console.log(params.sender)
       //console.log(global.PORT)
-      console.log(params.replication)
+      //console.log(params.replication)
       outSocket.sendCommandTo(
         params.senderip,
         params.senderport,

@@ -8,7 +8,7 @@ module.exports = (params) => {
   const nextIdChecksum = global.nextNode.id ? parseInt(global.nextNode.id, 16) : 0 //if we have a next node then get id else put 0
   //Based on the store method, if the key minus my id is greated than the next difference then I must not have it
   //else I must have it.
-  if (Math.abs(keyChecksum - idChecksum) >= Math.abs(nextIdChecksum - idChecksum)) {
+  if (Math.abs(idChecksum - keyChecksum) > Math.abs(nextIdChecksum - keyChecksum)) {
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,
