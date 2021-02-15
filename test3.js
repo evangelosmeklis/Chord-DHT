@@ -47,7 +47,7 @@ const ip10 = prompt('What is your ip10: ');
 const id10 = prompt('What is your id10: ');
 const port10  = prompt('What is your port10: '); 
 
-fs.readFile('insert.txt', 'utf8', function (err,data) {
+fs.readFile('requests.txt', 'utf8', function (err,data) {
     if (err) {
         return console.log(err);
     }
@@ -56,7 +56,7 @@ fs.readFile('insert.txt', 'utf8', function (err,data) {
     console.time("dbsave");
     // print all lines
     lines.forEach((line) => {
-        var choose = 1//getRandomInt(9) + 1
+        var choose =  getRandomInt(9) + 1
         if (choose == 9) {
             sndrip = ip9
             sndrport = port9
@@ -121,7 +121,6 @@ fs.readFile('insert.txt', 'utf8', function (err,data) {
             rcvid = id2
         }
         iq = line.split(',')[0]
-        console.log(key)
         if (iq == 'insert'){
             key = line.split(',')[1]
             const hashKey = hashMaker.generateHashFrom(key) //hashes the key
