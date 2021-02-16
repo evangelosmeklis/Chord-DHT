@@ -9,13 +9,29 @@ module.exports = (params) => {
   //Based on the store method, if the key minus my id is greated than the next difference then I must not have it
   //else I must have it.
   var re = 0
-  if (global.myId == global.boostrap || global.reachedb == 1) re =1 
-  if (Math.abs(idChecksum) > Math.abs(nextIdChecksum) && params.force==0 && re==0) {
+  //console.log(params.reachedb)
+  if (global.myId == global.bootstrap || params.reachedb == 1){
+    //console.log(global.myId)
+    //console.log(global.bootstrap)
+    if (global.myId == global.bootstrap) console.log("Reached bootstrap for first time")
+    //console.log("Reached bootstrap")
+    re = 1
+  } 
+
+  if (re ==0){
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.RETRIEVE,
-      outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key, params.replication,0, params.type,params.senderip,params.senderport,params.senderid)
+      outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key, params.replication,0, params.type,re,params.senderip,params.senderport,params.senderid)
+    )
+  }
+  else if (Math.abs(idChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
+    outSocket.sendCommandTo(
+      global.nextNode.ip,
+      global.nextNode.port,
+      messageCommand.RETRIEVE,
+      outSocket.createCommandPayload(messageCommand.RETRIEVE)(params.key, params.replication,0, params.type,re,params.senderip,params.senderport,params.senderid)
     )
   } else {
     if (!global.fileList[params.key]) {

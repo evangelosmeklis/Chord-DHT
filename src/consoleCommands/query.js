@@ -45,7 +45,7 @@ module.exports = (params) => {
     } 
   
     var r = 0
-    if (global.myId == global.boostrap) r = 1
+    if (global.myId == global.bootstrap) r = 1
 
     if (global.nextNode.ip) {
       return outSocket.sendCommandTo(

@@ -7,17 +7,17 @@ module.exports = (params) => {
   const ingressNodeChecksum = parseInt(params.id, 16)
   const nextNodeChecksum = global.nextNode.id ? parseInt(global.nextNode.id, 16) : 0
   //if the id of the joining node is closer to mine then inform the node that is going in that it is getting put behind me
-  global.bootstrap = global.myId
   if (
     Math.abs(idChecksum - ingressNodeChecksum) >= Math.abs(nextNodeChecksum - ingressNodeChecksum) ||
     !global.previousNode.ip
   ) {
+    if (global.weare ==2) global.bootstrap = global.myId
     outSocket.sendCommandTo(
       //It informs the node that wants to join that it can join
       params.nodeAddress,
       params.nodePort,
       messageCommand.JOIN_ACK,
-      outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare,global.myId)
+      outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare,global.bootstrap)
     )
 
     if (global.weare>2){

@@ -22,6 +22,7 @@ global.weare = 1
 function connectToDHT (nodeList) {
   if (nodeList.length <= 0) {
     logger.info(`No nodes where found. Creating a new network`) // There are no nodes, so this is the first node on the DHT
+    logger.info('I am the boostrap node')
     global.myId = hashMaker.generateHashFrom(
       (0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff).toString(16)
     )
