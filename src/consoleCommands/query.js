@@ -11,7 +11,7 @@ module.exports = (params) => {
     if (i==0) key = key + params[i]
     else key = key + " " + params[i] 
   }
-  //console.log(key)
+  console.log(key)
   // print everything that is on the current node
   if (key == "*") {
     contents = []
@@ -38,6 +38,7 @@ module.exports = (params) => {
 
   else {
     const searchKey = hashMaker.generateHashFrom(key)
+    console.log(searchKey)
     //if there is the searchKey on the fileList then call saveFileToDisk
     if (global.fileList[searchKey] && (global.type==1 || global.replication==1)){
       return saveFileToDisk(searchKey)

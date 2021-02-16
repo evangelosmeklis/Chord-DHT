@@ -9,7 +9,7 @@ module.exports = (params) => {
 
   // if the abs  value of the difference between my Id and the hashed key's is lower than the same difference of the next node, then I store it in me.
   // if not then I send the pair to the next node so this can be checked again. 
-  if (Math.abs(idChecksum - keyChecksum) <= Math.abs(nextIdChecksum - keyChecksum)) {
+  if (Math.abs(idChecksum) <= Math.abs(nextIdChecksum)) {
     global.fileList[params.key] = params.value
     if (params.replication > 1 && params.type==0 ){ //if I have to replicate send a replication message that includes the sender so we can send the ACK
       //console.log("---I have to replicate---")
