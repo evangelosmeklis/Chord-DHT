@@ -4,6 +4,10 @@ const outSocket = require('./src/utils/socketClient')
 const messageCommand = require('./src/config/messageStrings')
 const hashMaker = require('./src/utils/hashFactory')
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 const replication = prompt('What is the k: ');
 const type = prompt('What is the replication type (0 for chain replication , 1 for eventual-consistensy): ');
 
@@ -45,13 +49,13 @@ const port9  = prompt('What is your port9: ');
 
 const ip10 = prompt('What is your ip10: ');
 const id10 = prompt('What is your id10: ');
-const port10  = prompt('What is your port10: '); 
+const port10  = prompt('What is your port10: ');
 
 fs.readFile('requests.txt', 'utf8', function (err,data) {
     if (err) {
         return console.log(err);
     }
-  
+
     const lines = data.split(/\r?\n/);
     console.time("dbsave");
     // print all lines
