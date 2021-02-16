@@ -28,11 +28,16 @@ module.exports = (params) => {
       //the contents is to keep all the contents in the array to return them to the first node that made the query with *
       return outSocket.sendCommandTo(
         //send retrieve message to next node
-        global.nextNode.id,
+        global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVEALL,
         outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(thefirst,times,contents,global.ADDRESS,global.PORT,global.myId)
       )
+    }
+    else {
+      for (let info in contents){
+        console.log(contents[info])
+      }
     }
   }
 

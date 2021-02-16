@@ -9,7 +9,7 @@ module.exports = (params) => {
   global.weare = params.weare
   console.log("We are now: " + global.weare + " nodes in the network")
   global.bootstrap = params.bootstrap
-  console.log("Bootstrap node id: " + global.bootstrap + " " + params.bootstrap)
+  console.log("Bootstrap node id: " + global.bootstrap)
   global.nextNode = params.nextNode
   global.previousNode = params.previousNode
 }
