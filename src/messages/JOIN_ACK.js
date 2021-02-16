@@ -8,6 +8,8 @@ module.exports = (params) => {
   console.log("Replication type: " + thetype)
   global.weare = params.weare
   console.log("We are now: " + global.weare + " nodes in the network")
+  global.bootstrap = params.bootstrap
+  console.log("Bootstrap node id: " + params.bootstrap)
   global.nextNode = params.nextNode
   global.previousNode = params.previousNode
 }

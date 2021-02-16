@@ -56,10 +56,11 @@ function createCommandPayload (command) {
         id: global.myId
       })
     case commandMessages.JOIN_ACK:
-      return (replication,type,weare) => ({
+      return (replication,type,weare,bootstrap) => ({
         replication,
         type,
         weare,
+        bootstrap,
         previousNode: {
           port: global.previousNode.port || global.PORT,
           ip: global.previousNode.ip || global.ADDRESS,
@@ -108,10 +109,11 @@ function createCommandPayload (command) {
         key
       })
     case commandMessages.STORE:
-      return (key, value,replication,type,senderip,senderport,senderid) => ({
+      return (key, value,replication,type,reached,senderip,senderport,senderid) => ({
         key,
         value,
         type,
+        reached,
         replication,
         senderip,
         senderport,
@@ -147,10 +149,12 @@ function createCommandPayload (command) {
           senderid
       })
     case commandMessages.RETRIEVE:
-      return (key,replication,type, senderip,senderport,senderid) => ({
+      return (key,replication,force,type,reachedb,senderip,senderport,senderid) => ({
         key,
         replication,
+        force,
         type,
+        reachedb,
         senderip,
         senderport,
         senderid
