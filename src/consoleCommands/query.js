@@ -28,21 +28,29 @@ module.exports = (params) => {
       //the contents is to keep all the contents in the array to return them to the first node that made the query with *
       return outSocket.sendCommandTo(
         //send retrieve message to next node
-        global.nextNode.id,
+        global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVEALL,
         outSocket.createCommandPayload(messageCommand.RETRIEVEALL)(thefirst,times,contents,global.ADDRESS,global.PORT,global.myId)
       )
     }
+    else {
+      for (let info in contents){
+        console.log(contents[info])
+      }
+    }
   }
 
   else {
     const searchKey = hashMaker.generateHashFrom(key)
-
+    //console.log(searchKey)
     //if there is the searchKey on the fileList then call saveFileToDisk
-    if (global.fileList[searchKey]){
+    if (global.fileList[searchKey] && (global.type==1 || global.replication==1)){
       return saveFileToDisk(searchKey)
     } 
+  
+    var r = 0
+    if (global.myId == global.bootstrap) r = 1
 
     if (global.nextNode.ip) {
       return outSocket.sendCommandTo(
@@ -50,7 +58,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,global.type,global.ADDRESS,global.PORT,global.myId)
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,0,global.type,r,global.ADDRESS,global.PORT,global.myId)
       )
     }
     else saveFileToDisk() //only one node in the network

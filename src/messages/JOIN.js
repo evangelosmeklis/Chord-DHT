@@ -11,12 +11,13 @@ module.exports = (params) => {
     Math.abs(idChecksum - ingressNodeChecksum) >= Math.abs(nextNodeChecksum - ingressNodeChecksum) ||
     !global.previousNode.ip
   ) {
+    if (global.weare ==2) global.bootstrap = global.myId
     outSocket.sendCommandTo(
       //It informs the node that wants to join that it can join
       params.nodeAddress,
       params.nodePort,
       messageCommand.JOIN_ACK,
-      outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare)
+      outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare,global.bootstrap)
     )
 
     if (global.weare>2){

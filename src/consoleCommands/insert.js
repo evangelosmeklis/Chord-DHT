@@ -31,12 +31,14 @@ module.exports = (params) => {
       //console.log('it went in here on insert.js')
       //console.log("next node")
       //console.log(global.nextNode)
-      console.log(replication)
+      //console.log(replication)
+      var r=0
+      if (global.myId == global.bootstrap) r=1
       outSocket.sendCommandTo(
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.STORE,
-        outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val,replication,global.type,global.ADDRESS,global.PORT,global.myId)
+        outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val,replication,global.type,r,global.ADDRESS,global.PORT,global.myId)
       )
     } 
     

@@ -8,8 +8,12 @@ module.exports = (params) => {
   //difference below can become the lowest possible (I have to store the pair)
 
   // if the abs  value of the difference between my Id and the hashed key's is lower than the same difference of the next node, then I store it in me.
-  // if not then I send the pair to the next node so this can be checked again. 
-  if (Math.abs(idChecksum - keyChecksum) <= Math.abs(nextIdChecksum - keyChecksum)) {
+  // if not then I send the pair to the next node so this can be checked again.
+  var reached =0
+  if (global.myId == global.bootstrap || params.reached == 1){
+    reached=1 
+  } 
+  if (Math.abs(idChecksum) <= Math.abs(nextIdChecksum) && reached==1) {
     global.fileList[params.key] = params.value
     if (params.replication > 1 && params.type==0 ){ //if I have to replicate send a replication message that includes the sender so we can send the ACK
       //console.log("---I have to replicate---")
@@ -40,7 +44,7 @@ module.exports = (params) => {
       //console.log("it went in here 2 on store.js")
       //console.log(params.sender)
       //console.log(global.PORT)
-      console.log(params.replication)
+      //console.log(params.replication)
       outSocket.sendCommandTo(
         params.senderip,
         params.senderport,
@@ -53,7 +57,7 @@ module.exports = (params) => {
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.STORE,
-      outSocket.createCommandPayload(messageCommand.STORE)(params.key, params.value,params.replication,params.type,params.senderip,params.senderport,params.senderid)
+      outSocket.createCommandPayload(messageCommand.STORE)(params.key, params.value,params.replication,params.type,reached,params.senderip,params.senderport,params.senderid)
     )
   }
 }
