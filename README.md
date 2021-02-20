@@ -40,6 +40,7 @@ The main entrypoint is the `index.js` file. It accepts a single argument from th
 If no nodes respond, a new network will be created.
 
 - __Running as first node__: `node index.js replication X type Y`
+X can take any number from 1 to n and Y can take two values: either "chain-replication" or "eventual consistency"
 - __Try to connect to an existing node__: `node index.js localhost:<port>` or `node index.js <ip_address>:<port>` 
 
 
@@ -76,11 +77,15 @@ The folder structure looks like the following:
 
 When the node connects you can type `help` into the terminal to get a list of all available commands along with their params.
 
-### insert<key><value> 
+### insert
+
+- insert<key><value> 
 
 Inserts key value pair inside Chord 
 
-### query<key>
+### query
+
+- query<key>
 
 Queries key inside Chord
 
@@ -88,15 +93,21 @@ Queries key inside Chord
 
 Gracefully departs node
 
-### delete<key>
+### delete
+
+-delete<key>
 
 Deletes key value pair from the Chord
 
 ### overlay
 
+-overlay
+
 Gives an overview of the Chord network
 
 ### help
+
+-help
 
 Explains all these commands
 
