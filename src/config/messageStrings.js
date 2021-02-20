@@ -18,5 +18,6 @@ module.exports = {
   OVERLAY: 'OVERLAY', //Prints the network topology 
   REPLICATE: 'REPLICATE', //sent to next nodes in order to replicate current data
   REPLICATE_ACK: 'REPLICATE_ACK', //Confirms replication was succesfull
-  NODECOUNT: 'NODECOUNT' //Informs everynode in the network of the current number of nodes
+  NODECOUNT: 'NODECOUNT', //Informs everynode in the network of the current number of nodes
+  NEWKING : 'NEWKING' //Informs everyone about the new bootstrap node
 }

@@ -176,6 +176,11 @@ function createCommandPayload (command) {
           senderport,
           senderid
       })
+    case commandMessages.NEWKING:
+      return (bootstrap,change) => ({
+          bootstrap,
+          change
+      })
     case commandMessages.DELETE:
       return (key,replication,senderip,senderport,senderid) => ({
           key,

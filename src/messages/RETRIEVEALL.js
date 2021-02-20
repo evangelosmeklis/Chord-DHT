@@ -12,7 +12,6 @@ module.exports = (params) => {
     var zitimes = params.times
     var change = false
 
-    console.log("whatever")
     if (params.thefirst == global.myId){ //if we made a full circle just print the contents gathered
       if (zitimes>0){
         console.log("---Printing contents of node :)---" )

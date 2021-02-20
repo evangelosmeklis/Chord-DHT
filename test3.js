@@ -117,13 +117,6 @@ fs.readFile('requests.txt', 'utf8', function (err,data) {
             rcvport = port3
             rcvid = id3
         }
-        if (choose == 1) {
-            sndrip = ip1
-            sndrport = port1
-            rcvip = ip2
-            rcvport = port2
-            rcvid = id2
-        }
         iq = line.split(',')[0]
         if (iq == 'insert'){
             key = line.split(',')[1]
@@ -133,7 +126,7 @@ fs.readFile('requests.txt', 'utf8', function (err,data) {
                 sndrip,
                 sndrport,
                 messageCommand.STORE,
-                outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val,replication,type,rcvip,rcvport,rcvid)
+                outSocket.createCommandPayload(messageCommand.STORE)(hashKey, val,replication,type,0,rcvip,rcvport,rcvid)
             )
             console.log(line);
         }
@@ -144,8 +137,9 @@ fs.readFile('requests.txt', 'utf8', function (err,data) {
                 sndrip,
                 sndrport,
                 messageCommand.RETRIEVE,
-                outSocket.createCommandPayload(messageCommand.RETRIEVE)(hashKey, val,replication,type,rcvip,rcvport,rcvid)
+                outSocket.createCommandPayload(messageCommand.RETRIEVE)(hashKey,replication,0,type,0,rcvip,rcvport,rcvid)
               )
+            console.log(line);
         }
     })
     console.timeEnd("dbsave")
