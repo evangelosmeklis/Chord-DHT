@@ -77,15 +77,11 @@ The folder structure looks like the following:
 
 When the node connects you can type `help` into the terminal to get a list of all available commands along with their params.
 
-### insert
-
-- insert<key><value> 
+### insert key, value 
 
 Inserts key value pair inside Chord 
 
-### query
-
-- query<key>
+### query key
 
 Queries key inside Chord
 
@@ -93,21 +89,15 @@ Queries key inside Chord
 
 Gracefully departs node
 
-### delete
-
--delete<key>
+### delete key
 
 Deletes key value pair from the Chord
 
 ### overlay
 
--overlay
-
 Gives an overview of the Chord network
 
 ### help
-
--help
 
 Explains all these commands
 
