@@ -9,20 +9,8 @@ Distributed Systems Course, implementation of Chord DHT in node.js
 
 - [Node DHT](#node-dht)
   - [Introduction](#introduction)
-    - [Instalation](#instalation)
+    - [Installation](#installation)
     - [Running](#running)
-  - [Protocol](#protocol)
-    - [`JOIN (address, port)`](#join-address-port)
-    - [`JOIN_ACK (previousNode, nextNode)`](#join_ack-previousnode-nextnode)
-    - [`TRANSFER (key, value, sender)`](#transfer-key-value-sender)
-    - [`TRANSFER_ACK (key)`](#transfer_ack-key)
-    - [`NEW_NODE (ip, port, id)`](#new_node-ip-port-id)
-    - [`LEAVE (newPreviousNode)`](#leave-newpreviousnode)
-    - [`NODE_GONE (ip, port, id)`](#node_gone-ip-port-id)
-    - [`STORE(key, value)`](#storekey-value)
-    - [`RETRIEVE (key, saveLocation, sender)`](#retrieve-key-savelocation-sender)
-    - [`FOUND (key, value, saveLocation)`](#found-key-value-savelocation)
-    - [`NOT_FOUND ()`](#not_found-)
   - [Files](#files)
   - [Commands](#commands)
 
@@ -30,7 +18,7 @@ Distributed Systems Course, implementation of Chord DHT in node.js
 
 ## Introduction
 
-This is just an experiment as a coursework for Distributed Systems class on UFABC. The goal is to implement a simple DHT using some defined rules:
+This is just an experiment as a coursework for Distributed Systems class on National Technical University of Athens. The goal is to implement a simple DHT using some defined rules:
 
 - There must always be a ring of nodes, which every node has a pointer to the next one and another pointer to the previous one
 - If a node is alone then it points to no one
@@ -88,11 +76,11 @@ The folder structure looks like the following:
 
 When the node connects you can type `help` into the terminal to get a list of all available commands along with their params.
 
-### insert <key><value> 
+### insert<key><value> 
 
 Inserts key value pair inside Chord 
 
-### query <key>
+### query<key>
 
 Queries key inside Chord
 
@@ -100,7 +88,7 @@ Queries key inside Chord
 
 Gracefully departs node
 
-### delete <key>
+### delete<key>
 
 Deletes key value pair from the Chord
 
