@@ -5,6 +5,8 @@ const messageCommand = require('../config/messageStrings')
 module.exports = (params) => {
   //if there is not a next node after this node, then it just leaves the network
   if (!global.nextNode.ip && !global.previousNode.ip) {
+    logger.info("I was the bootstrap. Now Departing...")
+    logger.info("Bye Bye...")
     process.exit(0)
   }
   //if there is a next node
