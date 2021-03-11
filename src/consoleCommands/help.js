@@ -9,6 +9,5 @@ module.exports = (params) => {
   -> overlay: Prints the network topology
   -> help: Shows this
   -> info: Shows node information
-  -> debug: Toggle debug mode
   `)
 }
