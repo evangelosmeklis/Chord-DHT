@@ -8,7 +8,7 @@ module.exports = (params) => {
   const nextNodeChecksum = global.nextNode.id ? parseInt(global.nextNode.id, 16) : 0
   //if the id of the joining node is closer to mine then inform the node that is going in that it is getting put behind me
   if (
-    Math.abs(idChecksum - ingressNodeChecksum) >= Math.abs(nextNodeChecksum - ingressNodeChecksum) ||
+    Math.abs(idChecksum - ingressNodeChecksum) > Math.abs(nextNodeChecksum - ingressNodeChecksum) ||
     !global.previousNode.ip
   ) {
     if (global.weare ==2) global.bootstrap = global.myId
@@ -71,22 +71,14 @@ module.exports = (params) => {
         )
       }
     }
-
+    ncontents = []
     //The files that are no longer supposed to be here (because of the way that the key,value pairs are stored) should go were they are supposed to be
-    if (Object.keys(global.fileList).length > 0) {
-      //for every key value pair in the nodes filelist we check if it should be put somewhere else (because of the new node that just joined)
-      for (let fileHashName in global.fileList) {
-        //const fileHashChecksum = parseInt(fileHashName, 16)
-        if (Math.abs(idChecksum) > Math.abs(ingressNodeChecksum)) {
-          outSocket.sendCommandTo(
-            params.nodeAddress,
-            params.nodePort,
-            messageCommand.TRANSFER,
-            outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName],0, global.ADDRESS,global.PORT,global.myId)
-          )
-        }
-      }
-    }
+     outSocket.sendCommandTo(
+        params.nodeAddress,
+        params.nodePort,
+        messageCommand.REDISTR,
+        outSocket.createCommandPayload(messageCommand.REDISTR)(0,0,ncontents,global.ADDRESS,global.PORT,global.myId)
+      )
   } else {
     // This goes up to the original if and what it does is that if the difference in the hashes is not what we want,we push the join message to our next node
     outSocket.sendCommandTo(

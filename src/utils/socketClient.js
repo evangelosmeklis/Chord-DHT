@@ -215,6 +215,15 @@ function createCommandPayload (command) {
             times,
             weare
         })
+      case commandMessages.REDISTR:
+        return (times, foundb,contents, senderip,senderport,senderid) => ({
+          times,
+          foundb,
+          contents,
+          senderip,
+          senderport,
+          senderid
+        })
   }
 }
 
