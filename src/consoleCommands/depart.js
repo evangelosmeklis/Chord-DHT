@@ -21,6 +21,14 @@ module.exports = (params) => {
         outSocket.createCommandPayload(messageCommand.NEWKING)(global.nextNode.id,0)
       )
     }
+    
+    outSocket.sendCommandTo(
+      //Informs other nodes of the current number of nodes
+      global.nextNode.ip,
+      global.nextNode.port,
+      messageCommand.NODECOUNT,
+      outSocket.createCommandPayload(messageCommand.NODECOUNT)(global.previousNode.id,1,global.weare-1)
+    )
     // if we have pairs in this node then we must send them to the next node
     if (Object.keys(global.fileList).length > 0) {
       // We set the time of exist, depending on the number of pairs that this node has

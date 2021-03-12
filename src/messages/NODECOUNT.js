@@ -19,7 +19,6 @@ module.exports = (params) => {
   }
   else console.log("We are " + global.weare + " nodes in the network now.")
 
-  //for every key,value pair in the fileList of the node, put them inside contents
   if (global.nextNode.ip && change==false) {
       return outSocket.sendCommandTo(
         //send retrieve message to next node
