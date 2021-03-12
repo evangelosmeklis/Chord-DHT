@@ -9,12 +9,29 @@ module.exports = (params) => {
 
   //Based on the store method, if the key minus my id is greated than the next difference then I must not have it
   //else I must have it.
-  if (Math.abs(keyChecksum) > Math.abs(nextIdChecksum)) {
+  if (global.myId == global.bootstrap || params.reachedb == 1){
+    //console.log(global.myId)
+    //console.log(global.bootstrap)
+    //if (global.myId == global.bootstrap) console.log("Reached bootstrap for first time")
+    //console.log("Reached bootstrap")
+    re = 1
+  } 
+
+  if (re ==0){
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.DELETE,
-      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.senderip,params.senderport,params.senderid)
+      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.replication,0,re,params.senderip,params.senderport,params.senderid)
+    )
+  }
+
+  if (Math.abs(keyChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
+    outSocket.sendCommandTo(
+      global.nextNode.ip,
+      global.nextNode.port,
+      messageCommand.DELETE,
+      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.senderip,0,re,params.senderport,params.senderid)
     )
   } else {
     if (!global.fileList[params.key]) {
@@ -39,9 +56,9 @@ module.exports = (params) => {
           logger.info("Deleted.")
           outSocket.sendCommandTo(
               global.nextNode.ip,
-              params.nextNode.port,
+              global.nextNode.port,
               messageCommand.DELETE,
-              outSocket.createCommandPayload(messageCommand.DELETE)(params.key,params.replication-1, params.senderip,params.senderport,params.senderid)
+              outSocket.createCommandPayload(messageCommand.DELETE)(params.key,params.replication-1,1,re,params.senderip,params.senderport,params.senderid)
             )
         }
     }
