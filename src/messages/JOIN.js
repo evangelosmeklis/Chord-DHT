@@ -76,8 +76,8 @@ module.exports = (params) => {
     if (Object.keys(global.fileList).length > 0) {
       //for every key value pair in the nodes filelist we check if it should be put somewhere else (because of the new node that just joined)
       for (let fileHashName in global.fileList) {
-        const fileHashChecksum = parseInt(fileHashName, 16)
-        if (Math.abs(fileHashChecksum - idChecksum) >= Math.abs(fileHashChecksum - ingressNodeChecksum)) {
+        //const fileHashChecksum = parseInt(fileHashName, 16)
+        if (Math.abs(idChecksum) >= Math.abs(ingressNodeChecksum)) {
           outSocket.sendCommandTo(
             params.nodeAddress,
             params.nodePort,
