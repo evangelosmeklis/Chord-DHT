@@ -14,8 +14,7 @@ module.exports = (params) => {
 
     if (params.thefirst == global.myId){ //if we made a full circle just print the contents gathered
       if (zitimes>0){
-        console.log("---Printing contents of node :)---" )
-        console.log({ ip: global.ADDRESS, port: global.PORT, id: global.myId })
+        console.log("---Printing contents of all nodes :)---" )
         console.log("---Contents---")
         for (f in params.contents){ 
           console.log(params.contents[f])
