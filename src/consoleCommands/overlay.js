@@ -24,5 +24,11 @@ module.exports = (params) => {
         outSocket.createCommandPayload(messageCommand.OVERLAY)(thefirst,times,cnodesid,cnodesip,cnodesport,global.ADDRESS,global.PORT,global.myId)
       )
     }
+    else {
+      console.log("---Printing node IDs,IPs,Ports:)---" )
+      console.log(global.myId)
+      console.log(global.ADDRESS)
+      console.log(global.PORT)
+    }
 
 }
