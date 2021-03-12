@@ -9,7 +9,7 @@ module.exports = (params) => {
 
   //Based on the store method, if the key minus my id is greated than the next difference then I must not have it
   //else I must have it.
-  if (Math.abs(keyChecksum) >= Math.abs(nextIdChecksum)) {
+  if (Math.abs(keyChecksum) > Math.abs(nextIdChecksum)) {
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,

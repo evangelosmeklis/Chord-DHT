@@ -13,7 +13,7 @@ module.exports = (params) => {
   if (global.myId == global.bootstrap || params.reachedb == 1){
     //console.log(global.myId)
     //console.log(global.bootstrap)
-    if (global.myId == global.bootstrap) console.log("Reached bootstrap for first time")
+    //if (global.myId == global.bootstrap) console.log("Reached bootstrap for first time")
     //console.log("Reached bootstrap")
     re = 1
   } 
