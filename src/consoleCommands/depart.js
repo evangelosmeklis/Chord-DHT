@@ -41,7 +41,7 @@ module.exports = (params) => {
           global.nextNode.ip,
           global.nextNode.port,
           messageCommand.TRANSFER, //send TRANSFER message to the next node
-          outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName],global.ADDRESS,global.PORT,global.myId)
+          outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName],1,global.ADDRESS,global.PORT,global.myId)
         )
       }
       
