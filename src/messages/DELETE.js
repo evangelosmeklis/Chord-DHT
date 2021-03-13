@@ -26,15 +26,15 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.replication,0,re,params.senderip,params.senderport,params.senderid)
     )
   }
-
-  if (Math.abs(idChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
+  else if (Math.abs(idChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.DELETE,
       outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.senderip,0,re,params.senderport,params.senderid)
     )
-  } else {
+  } 
+  else {
     if (!global.fileList[params.key] && params.force==0) {
       // If the pair is not in this node, send message that it was not found
       return outSocket.sendCommandTo(params.senderip, params.senderport, messageCommand.NOT_FOUND, {})
