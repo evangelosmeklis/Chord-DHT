@@ -26,7 +26,7 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.replication,0,re,params.senderip,params.senderport,params.senderid)
     )
   }
-  else if (Math.abs(idChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
+  else if (Math.abs(keyChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,
