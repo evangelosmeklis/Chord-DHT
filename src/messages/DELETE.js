@@ -52,7 +52,7 @@ module.exports = (params) => {
             )
         }
         else {
-          logger.info("Song was found 1, deleting...")
+          logger.info("Song was found, deleting...")
           delete global.fileList[params.key]
           logger.info("Deleted.")
           outSocket.sendCommandTo(
