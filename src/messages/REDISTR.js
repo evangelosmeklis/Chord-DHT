@@ -26,23 +26,32 @@ module.exports = (params) => {
     }
     else if (global.myId == global.bootstrap && times == 1){
         //console.log("final : " + ncontents)
+        fcontents = []
         if (global.replication > 1){
             //console.log(ncontents)
+            check = 0
             for(i=0;i<ncontents.length-1;i++){
                 var temp0 = ncontents[i][0]
                 var temp1 = ncontents[i][1]
                 //console.log(temp0,temp1)
-                for (g=i;g<ncontents.length-1;g++) {
+                //console.log("contents length: " + ncontents.length)
+                for (g=i+1;g<ncontents.length-1;g++) {
                     //console.log(ncontents[g][0],ncontents[g][1])
                     if (ncontents[g][0] == temp0 && ncontents[g][1] == temp1){
-                        //console.log("Hi")
-                        delete ncontents[g]
+                        check=1
                     } 
                 }
+                if (check == 0){
+                    fcontents.push([temp0,temp1])
+                }
+                else check = 0
             }
             //console.log(ncontents)
         }
-        for(let f in ncontents){
+        else {
+            fcontents = ncontents
+        }
+        for(let f in fcontents){
             //console.log(ncontents[f][0])
             outSocket.sendCommandTo(
                 global.nextNode.ip,
