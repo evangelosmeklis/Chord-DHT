@@ -31,9 +31,7 @@ module.exports = (params) => {
         outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,global.replication,0,r,global.ADDRESS,global.PORT,global.myId)
       )
     }
-
-    // If there is only one node in the network
-    saveFileToDisk()
+    else saveFileToDisk(searchKey)
 }
 
 
