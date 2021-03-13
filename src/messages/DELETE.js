@@ -27,7 +27,7 @@ module.exports = (params) => {
     )
   }
 
-  if (Math.abs(keyChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
+  if (Math.abs(idChecksum) > Math.abs(nextIdChecksum) && params.force==0) {
     outSocket.sendCommandTo(
       global.nextNode.ip,
       global.nextNode.port,

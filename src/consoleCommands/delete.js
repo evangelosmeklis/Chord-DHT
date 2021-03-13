@@ -9,7 +9,7 @@ module.exports = (params) => {
     const [key] = params
     const searchKey = hashMaker.generateHashFrom(key)
 
-    //if there is the searchKey on the fileList then call saveFileToDisk
+    /* //if there is the searchKey on the fileList then call saveFileToDisk
     if (global.fileList[searchKey]){
       if (global.replication<=1) return saveFileToDisk(searchKey)
       else {
@@ -17,7 +17,7 @@ module.exports = (params) => {
         delete global.fileList[searchKey]
         global.replication = global.replication - 1
       }
-    } 
+    } */
 
     var r = 0
     if (global.myId == global.bootstrap) r = 1
