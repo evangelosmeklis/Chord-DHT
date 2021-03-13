@@ -13,7 +13,7 @@ module.exports = (params) => {
   if (global.myId == global.bootstrap || params.reached == 1){
     reached=1 
   } 
-  if (Math.abs(keyChecksum) <= Math.abs(nextIdChecksum) && reached==1) {
+  if (Math.abs(idChecksum - keyChecksum) <= Math.abs(nextIdChecksum - keyChecksum) && reached==1) {
     global.fileList[params.key] = params.value
     if (params.replication > 1 && params.type==0 ){ //if I have to replicate send a replication message that includes the sender so we can send the ACK
       //console.log("---I have to replicate---")
