@@ -48,9 +48,6 @@ module.exports = (params) => {
     if (global.fileList[searchKey] && (global.type==1 || global.replication==1)){
       return saveFileToDisk(searchKey)
     } 
-  
-    var r = 0
-    if (global.myId == global.bootstrap) r = 1
 
     if (global.nextNode.ip) {
       return outSocket.sendCommandTo(
@@ -58,7 +55,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.RETRIEVE,
-        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,0,global.type,r,global.ADDRESS,global.PORT,global.myId)
+        outSocket.createCommandPayload(messageCommand.RETRIEVE)(searchKey,global.replication,0,global.type,0,global.ADDRESS,global.PORT,global.myId)
       )
     }
     else saveFileToDisk(searchKey) //only one node in the network

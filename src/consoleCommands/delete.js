@@ -19,8 +19,6 @@ module.exports = (params) => {
       }
     } */
 
-    var r = 0
-    if (global.myId == global.bootstrap) r = 1
 
     if (global.nextNode.ip) {
       return outSocket.sendCommandTo(
@@ -28,7 +26,7 @@ module.exports = (params) => {
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.DELETE,
-        outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,global.replication,0,r,global.ADDRESS,global.PORT,global.myId)
+        outSocket.createCommandPayload(messageCommand.DELETE)(searchKey,global.replication,0,0,global.ADDRESS,global.PORT,global.myId)
       )
     }
     else saveFileToDisk(searchKey)

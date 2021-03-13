@@ -9,6 +9,7 @@ module.exports = (params) => {
 
   //Based on the store method, if the key minus my id is greated than the next difference then I must not have it
   //else I must have it.
+  var re =0 
   if (global.myId == global.bootstrap || params.reachedb == 1){
     //console.log(global.myId)
     //console.log(global.bootstrap)
@@ -16,7 +17,6 @@ module.exports = (params) => {
     //console.log("Reached bootstrap")
     re = 1
   } 
-  else re = 0
 
   if (re ==0){
     outSocket.sendCommandTo(
@@ -35,7 +35,7 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.senderip,0,re,params.senderport,params.senderid)
     )
   } else {
-    if (!global.fileList[params.key]) {
+    if (!global.fileList[params.key] && params.force==0) {
       // If the pair is not in this node, send message that it was not found
       return outSocket.sendCommandTo(params.senderip, params.senderport, messageCommand.NOT_FOUND, {})
     }
