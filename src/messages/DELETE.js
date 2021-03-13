@@ -16,6 +16,7 @@ module.exports = (params) => {
     //console.log("Reached bootstrap")
     re = 1
   } 
+  else re = 0
 
   if (re ==0){
     outSocket.sendCommandTo(
