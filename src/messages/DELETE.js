@@ -31,7 +31,7 @@ module.exports = (params) => {
       global.nextNode.ip,
       global.nextNode.port,
       messageCommand.DELETE,
-      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.senderip,0,re,params.senderport,params.senderid)
+      outSocket.createCommandPayload(messageCommand.DELETE)(params.key, params.replication,0,re,params.senderip,params.senderport,params.senderid)
     )
   } 
   else {
@@ -52,7 +52,7 @@ module.exports = (params) => {
             )
         }
         else {
-          logger.info("Song was found, deleting...")
+          logger.info("Song was found 1, deleting...")
           delete global.fileList[params.key]
           logger.info("Deleted.")
           outSocket.sendCommandTo(
