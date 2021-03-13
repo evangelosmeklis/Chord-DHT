@@ -112,9 +112,9 @@ function createCommandPayload (command) {
       return (key, value,replication,type,reached,senderip,senderport,senderid) => ({
         key,
         value,
+        replication,
         type,
         reached,
-        replication,
         senderip,
         senderport,
         senderid
