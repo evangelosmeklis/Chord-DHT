@@ -36,5 +36,13 @@ module.exports = (params) => {
                 outSocket.createCommandPayload(messageCommand.REPLICATE_ACK)(params.key, params.value,params.replication-1,params.type,global.ADDRESS,global.PORT,global.myId)
             )
         }
+        else if ((global.replication - (params.replication - 1) >= global.weare )){
+            outSocket.sendCommandTo(
+                params.senderip,
+                params.senderport,
+                messageCommand.REPLICATE_ACK,
+                outSocket.createCommandPayload(messageCommand.REPLICATE_ACK)(params.key, params.value,params.replication-1,params.type,global.ADDRESS,global.PORT,global.myId)
+            )
+        }
     }
 }
