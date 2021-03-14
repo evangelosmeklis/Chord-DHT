@@ -28,4 +28,13 @@ module.exports = (params) => {
     messageCommand.NODE_GONE,
     outSocket.createCommandPayload(messageCommand.NODE_GONE)()
   )
+
+  ncontents = []
+    //The files that are no longer supposed to be here (because of the way that the key,value pairs are stored) should go were they are supposed to be
+    outSocket.sendCommandTo(
+      global.nextNode.ip,
+      global.nextNode.port,
+      messageCommand.REDISTR,
+      outSocket.createCommandPayload(messageCommand.REDISTR)(0,0,ncontents,global.ADDRESS,global.PORT,global.myId)
+    )
 }
