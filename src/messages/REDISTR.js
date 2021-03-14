@@ -57,7 +57,7 @@ module.exports = (params) => {
                 global.nextNode.ip,
                 global.nextNode.port,
                 messageCommand.STORE,
-                outSocket.createCommandPayload(messageCommand.STORE)(fcontents[f][0], fcontents[f][1],global.replication,global.type,1,global.ADDRESS,global.PORT,global.myId)
+                outSocket.createCommandPayload(messageCommand.STORE)(fcontents[f][0], fcontents[f][1],global.replication,global.type,0,global.ADDRESS,global.PORT,global.myId)
               )
         }
     }
