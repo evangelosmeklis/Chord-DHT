@@ -17,7 +17,7 @@ module.exports = (params) => {
         console.log("---Printing contents of all nodes :)---" )
         console.log("---Contents---")
         for (f in params.contents){ 
-          console.log(params.contents[f])
+          console.log("Node ID: " + params.contents[f][0] + " data: " + params.contents[f][1])
         }
         change =true
         zitimes=zitimes+1
@@ -28,7 +28,7 @@ module.exports = (params) => {
     //for every key,value pair in the fileList of the node, put them inside contents
     if (change == false ){
       for (let info in global.fileList){
-        ncontents.push(global.fileList[info])
+        ncontents.push([global.myId,global.fileList[info]])
       }
     }
 

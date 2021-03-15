@@ -17,7 +17,7 @@ module.exports = (params) => {
     contents = []
     
     for (let info in global.fileList){
-      contents.push(global.fileList[info])
+      contents.push([global.myId, global.fileList[info]])
     }
 
     //next node has to do the same
