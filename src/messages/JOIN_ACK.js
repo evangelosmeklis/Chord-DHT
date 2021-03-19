@@ -1,3 +1,6 @@
+const outSocket = require('../utils/socketClient')
+const messageCommand = require('../config/messageStrings')
+
 module.exports = (params) => {
   global.replication = params.replication
   console.log("Replication value: " + global.replication)
@@ -12,4 +15,5 @@ module.exports = (params) => {
   console.log("Bootstrap node id: " + global.bootstrap)
   global.nextNode = params.nextNode
   global.previousNode = params.previousNode
+
 }

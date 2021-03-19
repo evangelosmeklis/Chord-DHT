@@ -22,6 +22,20 @@ module.exports = (params) => {
 
   global.previousNode = params.newPreviousNode
 
+  global.weare = global.weare -1
+  if (global.nextNode.ip){
+    outSocket.sendCommandTo(
+      //Informs other nodes of the current number of nodes
+      global.nextNode.ip,
+      global.nextNode.port,
+      messageCommand.NODECOUNT,
+      outSocket.createCommandPayload(messageCommand.NODECOUNT)(0,global.weare)
+      )
+  }
+  else {
+    console.log("We are " + global.weare + "in the network")
+  }
+
   outSocket.sendCommandTo( //inform the previous node (of the node that left) that its next node is gone
     params.newPreviousNode.ip,
     params.newPreviousNode.port,

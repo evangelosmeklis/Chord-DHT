@@ -2,7 +2,6 @@ const outSocket = require('../utils/socketClient')
 const messageCommand = require('../config/messageStrings')
 
 module.exports = (params) => {
-  global.weare = global.weare + 1
   const idChecksum = parseInt(global.myId, 16)
   const ingressNodeChecksum = parseInt(params.id, 16)
   const nextNodeChecksum = global.nextNode.id ? parseInt(global.nextNode.id, 16) : 0
@@ -11,7 +10,11 @@ module.exports = (params) => {
     Math.abs(idChecksum - ingressNodeChecksum) > Math.abs(nextNodeChecksum - ingressNodeChecksum) ||
     !global.previousNode.ip
   ) {
-    if (global.weare ==2) global.bootstrap = global.myId
+    global.weare = global.weare + 1 
+    if (global.weare == 2){ //giname dio ara eimai o bootstrap
+      global.bootstrap = global.myId
+    } 
+   
     outSocket.sendCommandTo(
       //It informs the node that wants to join that it can join
       params.nodeAddress,
@@ -20,16 +23,7 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare,global.bootstrap)
     )
 
-    if (global.weare>2 && global.myId == global.bootstrap){
-      outSocket.sendCommandTo(
-        //Informs other nodes of the current number of nodes
-        global.nextNode.ip,
-        global.nextNode.port,
-        messageCommand.NODECOUNT,
-        outSocket.createCommandPayload(messageCommand.NODECOUNT)(global.myId,1,global.weare)
-      )
-    }
-
+    
     //if the current node has a node behind it then it informs it that its next node is going to be the one that just joined the network
     if (global.previousNode.ip) {
       outSocket.sendCommandTo(
@@ -57,6 +51,7 @@ module.exports = (params) => {
       id: params.id
     }
 
+    
     //console.log(global.weare-1)
     //console.log(global.replication)
     if (global.weare-1 < global.replication){ //if the number of nodes in the network is less than the replicas needed, then we need to transfer all 
@@ -78,6 +73,13 @@ module.exports = (params) => {
         params.nodePort,
         messageCommand.REDISTR,
         outSocket.createCommandPayload(messageCommand.REDISTR)(0,0,ncontents,global.ADDRESS,global.PORT,global.myId)
+      )
+      outSocket.sendCommandTo(
+        //It informs the node that wants to join that it can join
+        params.nodeAddress,
+        params.nodePort,
+        messageCommand.NODECOUNTJ,
+        outSocket.createCommandPayload(messageCommand.NODECOUNTJ)(0,global.weare)
       )
   } else {
     // This goes up to the original if and what it does is that if the difference in the hashes is not what we want,we push the join message to our next node

@@ -11,4 +11,6 @@ module.exports = (params) => {
   console.log(global.fileList)
   console.log(`--- Total received messages:`)
   console.log(global.stats)
+  console.log(`--- Nodes in the network:`)
+  console.log(global.weare)
 }
