@@ -11,7 +11,6 @@ module.exports = (params) => {
         else if (global.bootstrap == global.myId) change = params.change + 1
 
         return outSocket.sendCommandTo(
-        //send retrieve message to next node
         global.nextNode.ip,
         global.nextNode.port,
         messageCommand.NEWKING,

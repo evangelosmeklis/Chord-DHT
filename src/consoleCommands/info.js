@@ -13,4 +13,6 @@ module.exports = (params) => {
   console.log(global.stats)
   console.log(`--- Nodes in the network:`)
   console.log(global.weare)
+  console.log(`--- Bootstrap:`)
+  console.log(global.bootstrap)
 }

@@ -214,11 +214,6 @@ function createCommandPayload (command) {
           reached,
           weare
         })
-      case commandMessages.NODECOUNTJ:
-        return (reached,weare) => ({
-          reached,
-          weare
-        })
       case commandMessages.REDISTR:
         return (times, foundb,contents, senderip,senderport,senderid) => ({
           times,

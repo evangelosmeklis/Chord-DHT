@@ -23,6 +23,16 @@ module.exports = (params) => {
   //console.log("Reached this.")
   global.previousNode = params.newPreviousNode
 
+
+  //console.log("Reached this vol2.")
+  if (params.newPreviousNode.ip){
+    outSocket.sendCommandTo( //inform the previous node (of the node that left) that its next node is gone
+      params.newPreviousNode.ip,
+      params.newPreviousNode.port,
+      messageCommand.NODE_GONE,
+      outSocket.createCommandPayload(messageCommand.NODE_GONE)()
+    )
+  }
   global.weare = global.weare -1
   if (global.nextNode.ip){
     outSocket.sendCommandTo(
@@ -35,15 +45,6 @@ module.exports = (params) => {
   }
   else {
     console.log("We are " + global.weare + "in the network")
-  }
-  //console.log("Reached this vol2.")
-  if (params.newPreviousNode.ip){
-    outSocket.sendCommandTo( //inform the previous node (of the node that left) that its next node is gone
-      params.newPreviousNode.ip,
-      params.newPreviousNode.port,
-      messageCommand.NODE_GONE,
-      outSocket.createCommandPayload(messageCommand.NODE_GONE)()
-    )
   }
   //console.log("Reached this vol3.")
   if (global.nextNode.ip){

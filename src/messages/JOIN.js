@@ -78,8 +78,8 @@ module.exports = (params) => {
         //It informs the node that wants to join that it can join
         params.nodeAddress,
         params.nodePort,
-        messageCommand.NODECOUNTJ,
-        outSocket.createCommandPayload(messageCommand.NODECOUNTJ)(0,global.weare)
+        messageCommand.NODECOUNT,
+        outSocket.createCommandPayload(messageCommand.NODECOUNT)(0,global.weare)
       )
   } else {
     // This goes up to the original if and what it does is that if the difference in the hashes is not what we want,we push the join message to our next node

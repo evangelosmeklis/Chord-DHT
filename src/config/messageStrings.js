@@ -21,5 +21,4 @@ module.exports = {
   NODECOUNT: 'NODECOUNT', //Informs everynode in the network of the current number of nodes
   NEWKING : 'NEWKING', //Informs everyone about the new bootstrap node
   REDISTR : 'REDISTR', //Redistributing after join
-  NODECOUNTJ: 'NODECOUNTJ' //nodecount for join
 }

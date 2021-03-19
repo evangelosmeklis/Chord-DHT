@@ -48,6 +48,7 @@ module.exports = (params) => {
 function performExit () {
   logger.info('File transfer completed. Sending exit message to next node')
   // Send message to next node
+  console.log(global.previousNode)
   if (global.nextNode.ip){
     outSocket.sendCommandTo(
       global.nextNode.ip,
