@@ -10,7 +10,7 @@ module.exports = (params) => {
   if (reached == 1){ //if we made a full circle just print the contents gathered
     global.weare = params.weare 
     console.log("We are " + global.weare + " nodes in the network now.")
-    if (global.nextNode.id != global.bootstrap){
+    if (global.nextNode.ip && global.nextNode.id != global.bootstrap){
      //console.log(global.myId,global.nextNode.id,global.bootstrap)
       outSocket.sendCommandTo(
         //Informs other nodes of the current number of nodes
@@ -27,7 +27,7 @@ module.exports = (params) => {
       //Informs other nodes of the current number of nodes
       global.nextNode.ip,
       global.nextNode.port,
-      messageCommand.NODECOUNTJ,
+      messageCommand.NODECOUNT,
       outSocket.createCommandPayload(messageCommand.NODECOUNT)(reached,params.weare)
       )
   }
