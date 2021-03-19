@@ -40,7 +40,6 @@ module.exports = (params) => {
       }
       
     }
-
     performExit()
   }
   logger.info(`Disconnecting...`)
