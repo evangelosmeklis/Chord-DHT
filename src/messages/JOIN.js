@@ -20,7 +20,7 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.JOIN_ACK)(global.replication,global.type,global.weare,global.bootstrap)
     )
 
-    if (global.weare>2){
+    if (global.weare>2 && global.myId == global.bootstrap){
       outSocket.sendCommandTo(
         //Informs other nodes of the current number of nodes
         global.nextNode.ip,
