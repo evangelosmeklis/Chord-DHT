@@ -13,18 +13,14 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.LEAVE_ACK)()
     )
   }
-
   // if there are two nodes in the network then we have to make the current node point to itself
   if (params.newPreviousNode.id === global.myId) {
     global.previousNode = { id: null, ip: null, port: null }
     global.nextNode = { id: null, ip: null, port: null }
-    return
   }
-  //console.log("Reached this.")
   global.previousNode = params.newPreviousNode
 
 
-  //console.log("Reached this vol2.")
   if (params.newPreviousNode.ip){
     outSocket.sendCommandTo( //inform the previous node (of the node that left) that its next node is gone
       params.newPreviousNode.ip,
@@ -33,6 +29,7 @@ module.exports = (params) => {
       outSocket.createCommandPayload(messageCommand.NODE_GONE)()
     )
   }
+
   global.weare = global.weare -1
   if (global.nextNode.ip){
     outSocket.sendCommandTo(
@@ -44,7 +41,7 @@ module.exports = (params) => {
       )
   }
   else {
-    console.log("We are " + global.weare + "in the network")
+    console.log("We are " + global.weare + " nodes in the network now.")
   }
   //console.log("Reached this vol3.")
   if (global.nextNode.ip){
