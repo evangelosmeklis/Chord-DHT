@@ -6,7 +6,7 @@ module.exports = (params) => {
 
     // if the abs  value of the difference between my Id and the hashed key's is lower than the same difference of the next node, then I store it in me.
     // if not then I send the pair to the next node so this can be checked again. 
-    if (global.fileList[params.key]){ //if I already have the key push it front
+    /*if (global.fileList[params.key] == params.value){ //if I already have the key push it front
         outSocket.sendCommandTo(
             global.nextNode.ip,
             global.nextNode.port,
@@ -14,7 +14,7 @@ module.exports = (params) => {
             outSocket.createCommandPayload(messageCommand.REPLICATE)(params.key, params.value,params.replication,params.senderip,params.senderport,params.senderid)
         ) 
     }
-    else { //so I don't have the key and I must replicate
+    else {*/ //so I don't have the key and I must replicate
         global.fileList[params.key] = params.value
         if (params.replication > 1 && (global.replication - (params.replication - 1) < global.weare ) ){ //if there are more replications to be done send replicate message to next node
             //console.log("---more replications---")
@@ -45,4 +45,3 @@ module.exports = (params) => {
             )
         }
     }
-}
