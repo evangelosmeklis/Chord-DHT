@@ -3,7 +3,7 @@ const messageCommand = require('../config/messageStrings')
 
 module.exports = (params) => {
   tr = true;
-  if (global.fileList[params.key] && global.nextNode.ip && global.weare -1 >= global.replication){ 
+  if (global.fileList[params.key] && global.nextNode.ip /*&& global.weare -1 >= global.replication*/){ 
     //console.log(global.fileList[params.key])
     tr = false //if we already have the file due to replicas then we must return and not send transfer ack
     outSocket.sendCommandTo(

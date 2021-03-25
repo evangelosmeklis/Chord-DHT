@@ -24,7 +24,7 @@ module.exports = (params) => {
     
     
     // if we have pairs in this node then we must send them to the next node
-    if (Object.keys(global.fileList).length > 0 && global.nextNode.ip) {
+    if (Object.keys(global.fileList).length > 0 && global.nextNode.ip && global.weare-1>=global.replication ) {
       // We set the time of exist, depending on the number of pairs that this node has
       timeout = Object.keys(global.fileList).length * 2000
       logger.info('Transfering files to next node')
