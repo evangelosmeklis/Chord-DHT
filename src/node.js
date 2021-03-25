@@ -83,14 +83,14 @@ function setUpLocalTCPServer (replication,type) {
       const message = JSON.parse(data.toString())
       var stored=0
       if (message.commandString == 'STORE'){
-        console.time("test")
+        console.time("InsertTime")
         stored=1
       } 
       global.stats[message.commandString] = (global.stats[message.commandString] || 0) + 1 //increases the count for this type of message
       if (global.DEBUG) console.log('### MESSAGE RECEIVED\n', message)
       require(`./messages/${message.commandString}`)(message.commandParams)
       
-      if (stored==1) console.timeEnd("test")
+      if (stored==1) console.timeEnd("InsertTime")
     })
 
     socket.on('close', () => {
