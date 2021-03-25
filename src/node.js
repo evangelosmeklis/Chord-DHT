@@ -79,10 +79,18 @@ function setUpLocalTCPServer (replication,type) {
     //Opens the port to receive tcp messages
     socket.on('data', (data) => {
       // Handling event for incoming messages
+      
       const message = JSON.parse(data.toString())
+      var stored=0
+      if (message.commandString == 'STORE'){
+        console.time("test")
+        stored=1
+      } 
       global.stats[message.commandString] = (global.stats[message.commandString] || 0) + 1 //increases the count for this type of message
       if (global.DEBUG) console.log('### MESSAGE RECEIVED\n', message)
       require(`./messages/${message.commandString}`)(message.commandParams)
+      
+      if (stored==1) console.timeEnd("test")
     })
 
     socket.on('close', () => {
